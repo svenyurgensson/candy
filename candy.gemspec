@@ -7,9 +7,9 @@ Gem::Specification.new do |s|
   s.version = Candy::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors = ["Stephen Eley"]
-  s.description = %q{Candy provides simple, transparent object persistence for the MongoDB database.  Classes that 
+  s.description = %q{Candy provides simple, transparent object persistence for the MongoDB database.  Classes that
 include Candy modules save all properties to Mongo automatically, can be recursively embedded,
-and can retrieve records with chainable open-ended class methods, eliminating the need for 
+and can retrieve records with chainable open-ended class methods, eliminating the need for
 method calls like 'save' and 'find.'
 }
   s.email = %q{sfeley@gmail.com}
@@ -21,8 +21,9 @@ method calls like 'save' and 'find.'
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
 
-  s.add_dependency 'mongo', '~> 1.4.0'
-  s.add_dependency 'bson_ext', '~> 1.4.0'
+  s.add_dependency 'mongo', '1.10.2'
+  s.add_dependency 'bson_ext', '1.10.2'
+
 
   s.add_development_dependency 'rspec', '~> 2.7.0'
   s.add_development_dependency 'mocha', '~> 0.10.0'
