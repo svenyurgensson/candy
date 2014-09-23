@@ -177,7 +177,14 @@ module Candy
             when Candy::CandyHash
               value.to_h
             when Candy::CandyArray
-              value.map(&:to_h)
+              value.map do |v|
+                case v
+                when Candy::CandyHash, Candy::CandyArray
+                  v.to_h
+                else
+                  v
+                end
+              end
             else
               value
             end
