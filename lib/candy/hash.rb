@@ -1,7 +1,7 @@
 require 'candy/piece'
 
 module Candy
-  
+
   # An untyped hash that behaves like a Candy::Piece.  This class has two major uses:
   #
   # * It's a convenient starting point if you just want to store a bunch of data in Mongo
@@ -16,14 +16,14 @@ module Candy
   class CandyHash
     include Crunch
     include Piece
-    
+
     self.collection = 'candy'
-    
+
     # Overrides the default behavior in Candy::Piece so that we DO NOT add our
     # class name to the saved values.
     def to_candy
       candy
     end
-          
+
   end
 end

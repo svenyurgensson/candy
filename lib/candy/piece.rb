@@ -4,15 +4,15 @@ require 'candy/embeddable'
 require 'candy/factory'
 
 module Candy
-  
+
   # Handles autopersistence and single-object retrieval for an arbitrary Ruby class.
   # For retrieving many objects, include Candy::Collection somewhere else or use
   # the magic Candy() factory.
   module Piece
-    
+
     module ClassMethods
       include Crunch::ClassMethods
-      
+
       # Retrieves a single object from Mongo by its search attributes, or nil if it can't be found.
       def first(conditions={})
         conditions = {'_id' => conditions} unless conditions.is_a?(Hash)
@@ -20,7 +20,7 @@ module Candy
           self.new(record)
         end
       end
-      
+
       # Performs an 'upsert' into the collection.  The first parameter is a field name or array of fields
       # which act as our "key" fields -- if a document in the system matches the values from the hash,
       # it'll be updated.  Otherwise, an insert will occur.  The second parameter tells us what to set or
@@ -32,7 +32,7 @@ module Candy
         end
         collection.update search_keys, fields, :upsert => true
       end
-      
+
 
       # Deep magic!  Finds and returns a single object by the named attribute.
       def method_missing(name, *args, &block)
@@ -50,12 +50,12 @@ module Candy
         this = self.piece(*args)
         this.candy_adopt(parent, attribute)
       end
-      
-      
-      # Makes a new object with a given state that is _not_ immediately saved, but is 
-      # held in memory instead.  The principal use for this is to embed it in other 
+
+
+      # Makes a new object with a given state that is _not_ immediately saved, but is
+      # held in memory instead.  The principal use for this is to embed it in other
       # documents.  Except for the unsaved state, this functions identically to 'new'
-      # and will pass all its arguments to the initializer.  (Note that you can still 
+      # and will pass all its arguments to the initializer.  (Note that you can still
       # embed documents that _have_ been saved--but then you'll have the data in two
       # places.)
       def piece(*args)
@@ -66,23 +66,23 @@ module Candy
         end
         self.new(*args)
       end
-      
-      
+
+
     private
       # Creates a method in the same namespace as the included class that points to
       # 'first', for easier semantics.
       def self.extended(receiver)
         Factory.magic_method(receiver, 'first', 'conditions={}')
-      end  
+      end
     end
-    
+
     # HERE STARTETH THE MODULE PROPER.  (The above are the class methods.)
     include Crunch
     include Crunch::Document
     include Embeddable
-    
-    
-    # Our initializer expects the last argument to be a hash of values. If the hash contains an '_id' 
+
+
+    # Our initializer expects the last argument to be a hash of values. If the hash contains an '_id'
     # field we assume we're being constructed from a MongoDB document and we unwrap the remaining
     # values; otherwise we assume we're a new document and set any values in the hash as if they
     # were assigned. Any other arguments are not our business and will be passed down the chain.
@@ -97,30 +97,30 @@ module Candy
       end
       super
     end
-    
+
     # Shortcut to the document ID.
     def id
       @__candy_id
     end
-    
+
     # Remove an item
     def remove
       self.class.collection.remove(_id: @__candy_id)
     end
-    
+
     # Returns the hash of memoized values.
     def candy
       @__candy ||= retrieve || {}
     end
-    
-    # Objects are equal if they point to the same MongoDB record (unless both have IDs of nil, in which case 
+
+    # Objects are equal if they point to the same MongoDB record (unless both have IDs of nil, in which case
     # they're never equal.)
     def ==(subject)
       return false if id.nil?
       return false unless subject.respond_to?(:id)
-      self.id == subject.id 
+      self.id == subject.id
     end
-    
+
     # Candy's magic ingredient. Assigning to any unknown attribute will push that value into the Mongo collection.
     # Retrieving any unknown attribute will return that value from this record in the Mongo collection.
     def method_missing(name, *args, &block)
@@ -136,9 +136,9 @@ module Candy
     # Hash-like getter. If we don't have a value yet, we pull from the database looking for one.
     # Fields pulled from the database are keyed as symbols in the hash.
     def [](key)
-      candy[key] 
+      candy[key]
     end
-    
+
     # Hash-like setter.  Updates the object's internal state, and writes to the database if the state
     # has changed.  Keys should be passed in as symbols for best consistency with the database.
     def []=(key, value)
@@ -146,38 +146,56 @@ module Candy
       candy[key] = property
       set key => property
     end
-    
+
     # Clears memoized data so that the next read pulls from the database.
     def refresh
       @__candy = nil
       self
     end
-    
+
     # Returns the keys we've stored.
     def keys
       candy.keys
     end
-    
+
     # Returns the values we've stored.
     def values
       candy.values
     end
-    
+
     # Convenience method for debugging.  Shows the class, the Mongo ID, and the saved state hash.
     def to_s
       "#{self.class.name} (#{id})#{candy.inspect}"
     end
-    
-    
+
+    def to_h
+      keys.inject({}) do |acc, k|
+        acc[k] =
+          begin
+            value = self[k]
+            case value
+            when Candy::CandyHash
+              value.to_h
+            when Candy::CandyArray
+              value.map(&:to_h)
+            else
+              value
+            end
+          end
+        acc
+      end
+    end
+
+
     # Converts the object into a hash for MongoDB storage.  Keep in mind that wrapping happens _after_
     # this stage, so it's best to use symbols for keys and leave internal arrays and hashes alone.
     def to_candy
       candy.merge(CLASS_KEY => self.class.name)
     end
-    
+
     # Unwraps the values passed to us from MongoDB, setting parent attributes on any embedded Candy
     # objects.
-    def from_candy(hash) 
+    def from_candy(hash)
       unwrapped = {}
       hash.each do |key, value|
         field = Wrapper.unwrap_key(key)
@@ -185,12 +203,12 @@ module Candy
       end
       unwrapped
     end
-    
-    
-  
+
+
+
   private
-        
-    
+
+
     def self.included(receiver)
       receiver.extend ClassMethods
     end

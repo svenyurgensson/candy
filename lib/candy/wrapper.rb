@@ -3,24 +3,24 @@ require 'date'  # Only so we know what one is. Argh.
 require 'candy/qualified_const_get'
 
 module Candy
-  
+
   # Utility methods to serialize and unserialize many types of objects into BSON.
   module Wrapper
-    
-    BSON_SAFE = [String, 
+
+    BSON_SAFE = [String,
                 Symbol,
-                NilClass, 
-                TrueClass, 
-                FalseClass, 
-                Fixnum, 
-                Float, 
+                NilClass,
+                TrueClass,
+                FalseClass,
+                Fixnum,
+                Float,
                 Time,
                 Regexp,
-                BSON::ByteBuffer, 
-                BSON::ObjectId, 
+                BSON::ByteBuffer,
+                BSON::ObjectId,
                 BSON::Code,
                 BSON::DBRef]
-    
+
     # Makes an object safe for the sharp pointy edges of MongoDB. Types properly serialized
     # by the BSON.serialize call get passed through unmolested; others are unpacked and their
     # pieces individually shrink-wrapped.
@@ -46,21 +46,21 @@ module Candy
         wrap_object(thing)  # Our catchall machinery
       end
     end
-    
+
     # Takes an array and returns the same array with unsafe objects wrapped.
     def self.wrap_array(array)
       array.map {|element| wrap(element)}
     end
-    
+
     # Takes a hash and returns it with values wrapped. Symbol keys are reversibly converted to strings.
     def self.wrap_hash(hash)
       wrapped = {}
-      hash.each do |key, value|  
+      hash.each do |key, value|
         wrapped[wrap_key(key)] = wrap(value)
       end
       wrapped
     end
-    
+
     # Lightly wraps hash keys, converting symbols to strings and wrapping strings in single quotes.
     # Thus, we can recover symbols when we _unwrap_ them later.  Other key types will raise an exception.
     def self.wrap_key(key)
@@ -73,7 +73,7 @@ module Candy
         raise TypeError, "Candy field names must be strings or symbols. You gave us #{key.class}: #{key}"
       end
     end
-    
+
     # Returns a nested hash containing the class and instance variables of the object.  It's not the
     # deepest we could ever go (it doesn't handle singleton methods, etc.) but it's a start.
     def self.wrap_object(object)
@@ -87,7 +87,7 @@ module Candy
       wrapped["ivars"] = ivars unless ivars.empty?
       {"__object_" => wrapped}
     end
-    
+
     # Undoes any magic from the Wrapper.wrap method.  Almost everything falls through
     # untouched except for arrays and hashes. The 'parent' and 'attribute' parameters
     # are for recursively setting the parent properties of embedded Candy objects.
@@ -109,8 +109,8 @@ module Candy
         thing
       end
     end
-    
-    
+
+
     # Returns the hash as a Candy::Piece if a class name is embedded, or a CandyHash object otherwise.
     # The 'parent' and 'attribute' parameters should be set by the caller if this is an embedded
     # Candy object.
@@ -120,15 +120,15 @@ module Candy
       else
         klass = CandyHash
       end
-      
+
       if parent
         klass.embed(parent, attribute, hash)
       else
         klass.piece(hash)
       end
     end
-    
-    # The inverse of Wrapper.wrap_key -- removes single-quoting from strings and converts other strings 
+
+    # The inverse of Wrapper.wrap_key -- removes single-quoting from strings and converts other strings
     # to symbols.
     def self.unwrap_key(key)
       if key =~ /^'(.*)'$/
@@ -137,9 +137,9 @@ module Candy
         key.to_sym
       end
     end
-    
-    # Turns a hashed object back into an object of the stated class, setting any captured instance 
-    # variables.  The main limitation is that the object's class *must* respond to Class.new without 
+
+    # Turns a hashed object back into an object of the stated class, setting any captured instance
+    # variables.  The main limitation is that the object's class *must* respond to Class.new without
     # any parameters; we will not attempt to guess at any complex initialization behavior.
     def self.unwrap_object(hash)
       if innards = hash["__object_"]
@@ -152,6 +152,6 @@ module Candy
         end
         object
       end
-    end 
+    end
   end
-end 
+end

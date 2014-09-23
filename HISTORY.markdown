@@ -2,6 +2,10 @@ Candy History
 =============
 
 This document aims to provide only an overview.  Further, we've only really been tracking things since **v0.2**.  For obsessive detail, just check out the `git log`.
+v0.2.11 - 2014-09-24 (the "New life coming...")
+-----------------------------------------------
+* Update to last mongo gems
+* Add #to_h method to all pieces
 
 v0.2.10 - 2010-06-10 (the "This is not my beautiful hash" release)
 ------------------------------------------------------------------
@@ -15,7 +19,7 @@ Made arrays enumerable finally (thanks to dominikh with issue #13) and added som
 
 v0.2.9 - 2010-05-14 (the "+1" release)
 --------------------------------------
-Moved methods around again, placing more of the database update methods into Candy::Crunch.  Also began support for two flavors of 
+Moved methods around again, placing more of the database update methods into Candy::Crunch.  Also began support for two flavors of
 atomic update methods:
 
 1. _Safe_ methods that call the collection in "safe" mode, meaning that it's much slower but the update is verified and exceptions are returned by the Mongo driver.  These methods also return the new values.  So far supported are **set** and **inc**.
@@ -42,7 +46,7 @@ Found and fixed a convoluted bug that was preventing embedded Candy objects from
 
 v0.2.6 - 2010-05-03 (the "Spanish Fly" release)
 -----------------------------------------------
-Thanks to [xpaulbettsx](http://github.com/xpaulbettsx) for pointing out in issue \#4 that Candy was attempting to connect to localhost prematurely.  
+Thanks to [xpaulbettsx](http://github.com/xpaulbettsx) for pointing out in issue \#4 that Candy was attempting to connect to localhost prematurely.
 A stray setting of the collection name in CandyHash was the culprit, causing a cascade of lookups.  Refactored to maintain lazy evaluation of the whole MongoDB object chain, and while I was at it, moved most of the interesting objects into `autoload` conditions in the main Candy file instead of `require`.
 
 * Reorganized for autoloading
@@ -57,7 +61,7 @@ As I was building an app based on several Sinatra building blocks, I realized th
 
 
 v0.2.4 - 2010-04-21 (the "No shortcuts!" release)
-------------------------------------------------- 
+-------------------------------------------------
 While building validations and custom behavior on a new app, I realized that
 any method overrides in my classes were being bypassed if I passed the values
 in a hash to .new() -- it was just setting everything straight in Mongo.
