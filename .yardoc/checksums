@@ -1,0 +1,13 @@
+lib/candy.rb 8ee8f1d7ce2a5adf87d49a3fd57a6bdf8d8a6973
+lib/candy/hash.rb e25279901d1162a89bfe33c4385341028c8018d2
+lib/candy/piece.rb 1d395652dc4644d1f90d1a815b242ae8676e5d75
+lib/candy/array.rb 51313a73deeff082ad4b57c64f5e6fe3d5f44935
+lib/candy/crunch.rb d6bcabd6b09a27bf588d0db0875b5accd365b1d0
+lib/candy/factory.rb f70af9464965d9e3e50d11fce7ee0b2840b9fb60
+lib/candy/wrapper.rb 9d6bb9e89a89c45c1d342b7593489a524d1bb858
+lib/candy/version.rb 782e6f506dc1c2a787ecc9590362051515665a4a
+lib/candy/collection.rb 68d237d3f82e7962ab6ae4eb2d07d64e2e788d0f
+lib/candy/embeddable.rb 7f61944b04edf8cac0fa64892204eb59a83eb750
+lib/candy/exceptions.rb edfe5c6193c97d085c5976dbd459daec764b9cd2
+lib/candy/crunch/document.rb 2b3323b30f7dbbd280d50db181642c25f585c1e5
+lib/candy/qualified_const_get.rb d99bb22fee83339e2ee6adb9a293f124e29412f2
