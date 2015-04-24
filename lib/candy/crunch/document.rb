@@ -6,8 +6,12 @@ module Candy
       ### RETRIEVAL METHODS
       # Returns the listed fields of the document. If no fields are given, returns the whole document.
       def retrieve(*fields)
-        options = (fields.empty? ? {} : {fields: fields})
-        from_candy(collection.find_one({'_id' => id}, options)) if id
+        if fields.any?
+          proj = fields.inject({}){|acc, f| acc[f] = 1; acc}
+          from_candy(collection.find({'_id' => id}).projection(proj).first) if id
+        else
+          from_candy(collection.find({'_id' => id}).first) if id
+        end
       end
 
 
@@ -24,8 +28,8 @@ module Candy
         if @__candy_parent
           @__candy_parent.operate operator, embedded(fields), options
         else
-          @__candy_id = collection.insert({}) unless id   # Ensure we have something to update
-          collection.update({'_id' => id}, {"$#{operator}" => Wrapper.wrap(fields)}, options)
+          @__candy_id = collection.insert_one({}).inserted_id unless id   # Ensure we have something to update
+          collection.find({'_id' => id}).update_one({"$#{operator}" => Wrapper.wrap(fields)}, options)
         end
       end
 

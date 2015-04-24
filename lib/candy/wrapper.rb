@@ -8,18 +8,19 @@ module Candy
   module Wrapper
 
     BSON_SAFE = [String,
-                Symbol,
-                NilClass,
-                TrueClass,
-                FalseClass,
-                Fixnum,
-                Float,
-                Time,
-                Regexp,
-                BSON::ByteBuffer,
-                BSON::ObjectId,
-                BSON::Code,
-                BSON::DBRef]
+                 Symbol,
+                 NilClass,
+                 TrueClass,
+                 FalseClass,
+                 Fixnum,
+                 Float,
+                 Time,
+                 Regexp,
+                # BSON::ByteBuffer,
+                 BSON::ObjectId,
+                 BSON::Code,
+                # BSON::DBRef
+                ]
 
     # Makes an object safe for the sharp pointy edges of MongoDB. Types properly serialized
     # by the BSON.serialize call get passed through unmolested; others are unpacked and their

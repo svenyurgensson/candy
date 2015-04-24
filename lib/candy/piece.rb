@@ -16,7 +16,7 @@ module Candy
       # Retrieves a single object from Mongo by its search attributes, or nil if it can't be found.
       def first(conditions={})
         conditions = {'_id' => conditions} unless conditions.is_a?(Hash)
-        if record = collection.find_one(conditions)
+        if record = collection.find(conditions).first
           self.new(record)
         end
       end
@@ -30,7 +30,7 @@ module Candy
         Array(key_or_keys).each do |key|
           search_keys[key] = Wrapper.wrap(fields[key])
         end
-        collection.update search_keys, fields, :upsert => true
+        collection.find(search_keys).update_one fields, :upsert => true
       end
 
 
@@ -105,7 +105,7 @@ module Candy
 
     # Remove an item
     def remove
-      self.class.collection.remove(_id: @__candy_id)
+      self.class.collection.find(_id: @__candy_id).delete_one
     end
 
     # Returns the hash of memoized values.
@@ -168,6 +168,7 @@ module Candy
       "#{self.class.name} (#{id})#{candy.inspect}"
     end
 
+    # Convert data to hash with a nesting
     def to_h
       keys.inject({}) do |acc, k|
         acc[k] =
@@ -203,6 +204,9 @@ module Candy
     # Unwraps the values passed to us from MongoDB, setting parent attributes on any embedded Candy
     # objects.
     def from_candy(hash)
+      if hash.nil?
+        binding.pry
+      end
       unwrapped = {}
       hash.each do |key, value|
         field = Wrapper.unwrap_key(key)

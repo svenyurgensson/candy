@@ -20,17 +20,30 @@ module Candy
   # Overrides the options hash and resets the connection, db, and collection.
   def self.connection_options=(val)
     @connection = nil
+    val ||= {}
+
+    if log = val.delete(:logger)
+      connection_logger = log
+    end
+    if loglevel = val.delete(:log_level)
+      connection_logger.level = loglevel
+    end
+
     @connection_options = val
+  end
+
+  def self.connection_logger
+    Candy.connection.logger
   end
 
   # Passed to the default connection.  If not set, Mongo's default of localhost will be used.
   def self.host
-    @host
+    @host || "127.0.0.1"
   end
 
   # Passed to the default connection.  If not set, Mongo's default of 27017 will be used.
   def self.port
-    @port
+    @port || 27017
   end
 
   # A hash passed to the default connection.  See the Mongo::Connection documentation for valid options.
@@ -47,18 +60,25 @@ module Candy
 
   # Returns the connection you gave, or creates a default connection to the default host and port.
   def self.connection
-    @connection ||= Mongo::Connection.new(host, port, connection_options)
+    return @connection if defined?(@connection) and (not @connection.nil?)
+
+    @connection = Mongo::Client.new(["#{host}:#{port}"], connection_options)
+    @connection.define_singleton_method(:logger) do
+      Mongo::Logger.logger
+    end
+
+    @connection
   end
 
-  # Accepts a database you provide. You can provide a Mongo::DB object or a string with the database
-  # name. If you provide a Mongo::DB object, the default connection is not used, and the :strict flag
+  # Accepts a database you provide. You can provide a Mongo::Database object or a string with the database
+  # name. If you provide a Mongo::Database object, the default connection is not used, and the :strict flag
   # should be false or default collection lookup will fail.
   def self.db=(val)
     case val
-    when Mongo::DB
+    when Mongo::Database
       @db = val
     when String
-      @db = maybe_authenticate(Mongo::DB.new(val, connection))
+      @db = maybe_authenticate(Mongo::Database.new(connection, val))
     when nil
       @db = nil
     else
@@ -69,7 +89,7 @@ module Candy
   # Returns the database you gave, or creates a default database named for your username (or 'candy' if it
   # can't find a username).
   def self.db
-    @db ||= maybe_authenticate(Mongo::DB.new(Etc.getlogin || 'candy', connection, :strict => false))
+    @db ||= maybe_authenticate(Mongo::Database.new(connection, Etc.getlogin || 'candy', :strict => false))
   end
 
   # Sets the user for Mongo authentication. Both username AND password must be set or nothing will happen.
@@ -105,6 +125,10 @@ module Candy
         @connection ||= Candy.connection
       end
 
+      def connection_logger
+        Candy.connection_logger
+      end
+
       # First clears any collection and database we're talking to, then accepts a connection you provide.
       # You're responsible for your own host, port and options if you use this.
       def connection=(val)
@@ -118,10 +142,10 @@ module Candy
       def db=(val)
         self.collection = nil
         case val
-        when Mongo::DB
+        when Mongo::Database
           @db = val
         when String
-          @db = maybe_authenticate(Mongo::DB.new(val, connection))
+          @db = maybe_authenticate(Mongo::Database.new(connection, val))
         when nil
           @db = nil
         else
@@ -182,14 +206,14 @@ module Candy
       # Creates an index on the specified property, with an optional direction specified as either :asc or :desc.
       # (Note that this is deliberately a very simple method. If you want multi-key or unique indexes, just call
       # #create_index directly on the collection.)
-      def index(property, direction=:asc)
+      def index(property, direction=:asc, options={})
         case direction
-        when :asc then mongo_direction = Mongo::ASCENDING
-        when :desc then mongo_direction = Mongo::DESCENDING
+        when :asc  then mongo_direction = Mongo::Index::ASCENDING
+        when :desc then mongo_direction = Mongo::Index::DESCENDING
         else
           raise TypeError, "Index direction should be :asc or :desc"
         end
-        collection.create_index([[property, mongo_direction]])
+        collection.indexes.create_one({property => mongo_direction}, options)
       end
 
     private

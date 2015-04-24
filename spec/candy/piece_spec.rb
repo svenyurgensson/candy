@@ -27,17 +27,17 @@ describe Candy::Piece do
 
   it "can be given a hash of data to insert immediately" do
     that = Zagnut.new({calories: 500, morsels: "chewy"})
-    @verifier.find_one(calories: 500)["morsels"].should == "chewy"
+    @verifier.find(calories: 500).first["morsels"].should == "chewy"
   end
 
   it "saves any attribute it doesn't already handle to the database" do
     @this.bite = "Tasty!"
-    @verifier.find_one["bite"].should == "Tasty!"
+    @verifier.find.first["bite"].should == "Tasty!"
   end
 
   it "retrieves any attribute it doesn't already know about from the database" do
     @this.chew = "Munchy!"
-    @verifier.update({:_id => @this.id}, {:chew => "Yummy!"})
+    @verifier.find({:_id => @this.id}).update_one({:chew => "Yummy!"})
     that = Zagnut(@this.id)
     that.chew.should == "Yummy!"
   end
@@ -62,21 +62,21 @@ describe Candy::Piece do
     nougat = Nougat.new
     nougat.foo = 5
     @this.center = nougat
-    @verifier.find_one["center"]["__object_"]["class"].should == Nougat.name
+    @verifier.find.first["center"]["__object_"]["class"].should == Nougat.name
   end
 
   it "unwraps objects" do
     @this.blank = ""  # To force a save
     center = Nougat.new
     center.foo = :bar
-    @verifier.update({'_id' => @this.id}, '$set' => {:center => {"__object_" => {:class => Nougat.name, :ivars => {"@foo" => 'bar'}}}})
+    @verifier.find({'_id' => @this.id}).update_one('$set' => {:center => {"__object_" => {:class => Nougat.name, :ivars => {"@foo" => 'bar'}}}})
     @this.refresh.center.should be_a(Nougat)
     @this.center.instance_variable_get(:@foo).should == 'bar'
   end
 
   it "wraps symbols" do
     @this.crunch = :chomp
-    @verifier.find_one["crunch"].should == :chomp
+    @verifier.find.first["crunch"].should == :chomp
   end
 
 
@@ -190,43 +190,43 @@ describe Candy::Piece do
 
     it "will insert a document if the key field's value isn't found" do
       Zagnut.update(:ounces, {ounces: 15, crunchy: :not_very, flavor: 'butterscotch'})
-      @verifier.count.should == 3
+      @verifier.find.count.should == 3
       Zagnut.ounces(15).flavor.should == 'butterscotch'
     end
 
     it "will update a document if the key field's value is found" do
       Zagnut.update(:ounces, {ounces: 11, crunchy: :barely, salt: 0})
-      @verifier.count.should == 2
+      @verifier.find.count.should == 2
       @that.refresh
       @that.crunchy.should == :barely
     end
 
     it "can match on multiple keys" do
       Zagnut.update([:crunchy, :ounces], {ounces: 17, crunchy: :very, calories: 715})
-      @verifier.count.should == 2
+      @verifier.find.count.should == 2
       @this.refresh
       @this.calories.should == 715
     end
 
     it "won't match on multiple keys if they aren't all found" do
       Zagnut.update([:crunchy, :ounces], {ounces: 11, crunchy: :not_quite, color: 'brown'})
-      @verifier.count.should == 3
+      @verifier.find.count.should == 3
       Zagnut.crunchy(:not_quite).color.should == 'brown'
     end
 
     it "can increment a value simply" do
       @this.inc(:ounces).should == 18
-      @verifier.find_one(ounces: 18)["crunchy"].should == :very
+      @verifier.find(ounces: 18).first["crunchy"].should == :very
     end
 
     it "can increment a value by a specified positive amount" do
       @this.inc(:ounces, 5).should == 22
-      @verifier.find_one(ounces: 22)["crunchy"].should == :very
+      @verifier.find(ounces: 22).first["crunchy"].should == :very
     end
 
     it "can increment a value by a specified negative amount" do
       @this.inc(:ounces, -5).should == 12
-      @verifier.find_one(ounces: 12)["crunchy"].should == :very
+      @verifier.find(ounces: 12).first["crunchy"].should == :very
     end
 
 
@@ -248,9 +248,9 @@ describe Candy::Piece do
     end
 
     it "removes the object from the database" do
-      @verifier.find_one(flavor: 'gross')['color'].should == 'green'
+      @verifier.find(flavor: 'gross').first['color'].should == 'green'
       @eat_me.remove
-      @verifier.find_one(flavor: 'gross').should be_nil
+      @verifier.find(flavor: 'gross').first.should be_nil
     end
   end
 
@@ -264,7 +264,7 @@ describe Candy::Piece do
       end
 
       it "writes the object" do
-        @verifier.find_one['inner']['crunch'].should == 'wafer'
+        @verifier.find.first['inner']['crunch'].should == 'wafer'
       end
 
       it "reads the object" do
@@ -279,7 +279,7 @@ describe Candy::Piece do
 
       it "cascades changes" do
         @this.inner.coating = 'chocolate'
-        @verifier.find_one['inner']['coating'].should == 'chocolate'
+        @verifier.find.first['inner']['coating'].should == 'chocolate'
       end
 
       it "cascades deeply" do
@@ -295,13 +295,9 @@ describe Candy::Piece do
   end
 
 
-
-
-
-
   after(:each) do
-    KitKat.collection.remove
-    Zagnut.collection.remove
+    KitKat.collection.drop rescue nil
+    Zagnut.collection.drop rescue nil
   end
 
 end
