@@ -36,11 +36,11 @@ describe Candy::Crunch do
       l = Logger.new(STDOUT)
       l.level = Logger::FATAL
       Candy.connection_options = {:logger => l}
-      PeanutBrittle.connection.logger.should == Candy.connection.logger
+      PeanutBrittle.connection.logger.should eq(Candy.connection.logger)
     end
 
     it "clears the database when you set it" do
-      PeanutBrittle.db.name.should == 'candy_test'
+      PeanutBrittle.db.name.should  eq('candy_test')
       PeanutBrittle.connection = nil
       PeanutBrittle.instance_variable_get(:@db).should be_nil
     end
@@ -72,7 +72,9 @@ describe Candy::Crunch do
     end
 
     it "throws an exception if you give it a database type it can't recognize" do
-      lambda{PeanutBrittle.db = 5}.should raise_error(Candy::ConnectionError, "The db attribute needs a Mongo::DB object or a name string.")
+      -> {
+        PeanutBrittle.db = 5
+      }.should raise_error(Candy::ConnectionError, "The db attribute needs a Mongo::Database object or a name string.")
     end
 
     it "uses the Candy.db setting if you don't override it" do
@@ -92,7 +94,7 @@ describe Candy::Crunch do
 
     it "clears the collection when you set it" do
       PeanutBrittle.db = 'candy_test'
-      PeanutBrittle.collection.name.should == 'PeanutBrittle'
+      PeanutBrittle.collection.name.should eq('PeanutBrittle')
       PeanutBrittle.db = nil
       PeanutBrittle.instance_variable_get(:@collection).should be_nil
     end

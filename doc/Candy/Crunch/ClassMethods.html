@@ -6,7 +6,7 @@
 <title>
   Module: Candy::Crunch::ClassMethods
   
-    &mdash; Documentation by YARD 0.8.7.4
+    &mdash; Documentation by YARD 0.8.7.6
   
 </title>
 
@@ -206,6 +206,28 @@ a connection you provide.</p>
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#connection_logger-instance_method" title="#connection_logger (instance method)">- (Object) <strong>connection_logger</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#db-instance_method" title="#db (instance method)">- (Object) <strong>db</strong> </a>
     
 
@@ -256,7 +278,7 @@ you provide.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#index-instance_method" title="#index (instance method)">- (Object) <strong>index</strong>(property, direction = :asc) </a>
+      <a href="#index-instance_method" title="#index (instance method)">- (Object) <strong>index</strong>(property, direction = :asc, options = {}) </a>
     
 
     
@@ -411,12 +433,12 @@ full module namespace.)</p>
       <pre class="lines">
 
 
-178
-179
-180</pre>
+202
+203
+204</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/candy/crunch.rb', line 178</span>
+      <pre class="code"><span class="info file"># File 'lib/candy/crunch.rb', line 202</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_collection'>collection</span>
   <span class='ivar'>@collection</span> <span class='op'>||=</span> <span class='id identifier rubyid_db'>db</span><span class='period'>.</span><span class='id identifier rubyid_collection'>collection</span><span class='lparen'>(</span><span class='id identifier rubyid_collection_name'>collection_name</span><span class='rparen'>)</span>
@@ -454,21 +476,21 @@ connection are not used.</p>
       <pre class="lines">
 
 
-163
-164
-165
-166
-167
-168
-169
-170
-171
-172
-173
-174</pre>
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/candy/crunch.rb', line 163</span>
+      <pre class="code"><span class="info file"># File 'lib/candy/crunch.rb', line 187</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_collection='>collection=</span><span class='lparen'>(</span><span class='id identifier rubyid_val'>val</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_val'>val</span>
@@ -514,12 +536,12 @@ collection.</p>
       <pre class="lines">
 
 
-104
-105
-106</pre>
+124
+125
+126</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/candy/crunch.rb', line 104</span>
+      <pre class="code"><span class="info file"># File 'lib/candy/crunch.rb', line 124</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_connection'>connection</span>
   <span class='ivar'>@connection</span> <span class='op'>||=</span> <span class='const'>Candy</span><span class='period'>.</span><span class='id identifier rubyid_connection'>connection</span>
@@ -557,17 +579,47 @@ and options if you use this.</p>
       <pre class="lines">
 
 
-110
-111
-112
-113</pre>
+134
+135
+136
+137</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/candy/crunch.rb', line 110</span>
+      <pre class="code"><span class="info file"># File 'lib/candy/crunch.rb', line 134</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_connection='>connection=</span><span class='lparen'>(</span><span class='id identifier rubyid_val'>val</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_db'>db</span> <span class='op'>=</span> <span class='kw'>nil</span>
   <span class='ivar'>@connection</span> <span class='op'>=</span> <span class='id identifier rubyid_val'>val</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="connection_logger-instance_method">
+  
+    - (<tt>Object</tt>) <strong>connection_logger</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+128
+129
+130</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/candy/crunch.rb', line 128</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_connection_logger'>connection_logger</span>
+  <span class='const'>Candy</span><span class='period'>.</span><span class='id identifier rubyid_connection_logger'>connection_logger</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -601,12 +653,12 @@ database.</p>
       <pre class="lines">
 
 
-133
-134
-135</pre>
+157
+158
+159</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/candy/crunch.rb', line 133</span>
+      <pre class="code"><span class="info file"># File 'lib/candy/crunch.rb', line 157</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_db'>db</span>
   <span class='ivar'>@db</span> <span class='op'>||=</span> <span class='const'>Candy</span><span class='period'>.</span><span class='id identifier rubyid_db'>db</span>
@@ -646,34 +698,34 @@ will fail.</p>
       <pre class="lines">
 
 
-118
-119
-120
-121
-122
-123
-124
-125
-126
-127
-128
-129
-130</pre>
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/candy/crunch.rb', line 118</span>
+      <pre class="code"><span class="info file"># File 'lib/candy/crunch.rb', line 142</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_db='>db=</span><span class='lparen'>(</span><span class='id identifier rubyid_val'>val</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_collection'>collection</span> <span class='op'>=</span> <span class='kw'>nil</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_val'>val</span>
-  <span class='kw'>when</span> <span class='const'>Mongo</span><span class='op'>::</span><span class='const'>DB</span>
+  <span class='kw'>when</span> <span class='const'>Mongo</span><span class='op'>::</span><span class='const'>Database</span>
     <span class='ivar'>@db</span> <span class='op'>=</span> <span class='id identifier rubyid_val'>val</span>
   <span class='kw'>when</span> <span class='const'>String</span>
-    <span class='ivar'>@db</span> <span class='op'>=</span> <span class='id identifier rubyid_maybe_authenticate'>maybe_authenticate</span><span class='lparen'>(</span><span class='const'>Mongo</span><span class='op'>::</span><span class='const'>DB</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_val'>val</span><span class='comma'>,</span> <span class='id identifier rubyid_connection'>connection</span><span class='rparen'>)</span><span class='rparen'>)</span>
+    <span class='ivar'>@db</span> <span class='op'>=</span> <span class='id identifier rubyid_maybe_authenticate'>maybe_authenticate</span><span class='lparen'>(</span><span class='const'>Mongo</span><span class='op'>::</span><span class='const'>Database</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_connection'>connection</span><span class='comma'>,</span> <span class='id identifier rubyid_val'>val</span><span class='rparen'>)</span><span class='rparen'>)</span>
   <span class='kw'>when</span> <span class='kw'>nil</span>
     <span class='ivar'>@db</span> <span class='op'>=</span> <span class='kw'>nil</span>
   <span class='kw'>else</span>
-    <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ConnectionError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>The db attribute needs a Mongo::DB object or a name string.</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ConnectionError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>The db attribute needs a Mongo::Database object or a name string.</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -684,7 +736,7 @@ will fail.</p>
       <div class="method_details ">
   <h3 class="signature " id="index-instance_method">
   
-    - (<tt>Object</tt>) <strong>index</strong>(property, direction = :asc) 
+    - (<tt>Object</tt>) <strong>index</strong>(property, direction = :asc, options = {}) 
   
 
   
@@ -710,27 +762,27 @@ simple method. If you want multi-key or unique indexes, just call
       <pre class="lines">
 
 
-185
-186
-187
-188
-189
-190
-191
-192
-193</pre>
+209
+210
+211
+212
+213
+214
+215
+216
+217</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/candy/crunch.rb', line 185</span>
+      <pre class="code"><span class="info file"># File 'lib/candy/crunch.rb', line 209</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_index'>index</span><span class='lparen'>(</span><span class='id identifier rubyid_property'>property</span><span class='comma'>,</span> <span class='id identifier rubyid_direction'>direction</span><span class='op'>=</span><span class='symbol'>:asc</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_index'>index</span><span class='lparen'>(</span><span class='id identifier rubyid_property'>property</span><span class='comma'>,</span> <span class='id identifier rubyid_direction'>direction</span><span class='op'>=</span><span class='symbol'>:asc</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_direction'>direction</span>
-  <span class='kw'>when</span> <span class='symbol'>:asc</span> <span class='kw'>then</span> <span class='id identifier rubyid_mongo_direction'>mongo_direction</span> <span class='op'>=</span> <span class='const'>Mongo</span><span class='op'>::</span><span class='const'>ASCENDING</span>
-  <span class='kw'>when</span> <span class='symbol'>:desc</span> <span class='kw'>then</span> <span class='id identifier rubyid_mongo_direction'>mongo_direction</span> <span class='op'>=</span> <span class='const'>Mongo</span><span class='op'>::</span><span class='const'>DESCENDING</span>
+  <span class='kw'>when</span> <span class='symbol'>:asc</span>  <span class='kw'>then</span> <span class='id identifier rubyid_mongo_direction'>mongo_direction</span> <span class='op'>=</span> <span class='const'>Mongo</span><span class='op'>::</span><span class='const'>Index</span><span class='op'>::</span><span class='const'>ASCENDING</span>
+  <span class='kw'>when</span> <span class='symbol'>:desc</span> <span class='kw'>then</span> <span class='id identifier rubyid_mongo_direction'>mongo_direction</span> <span class='op'>=</span> <span class='const'>Mongo</span><span class='op'>::</span><span class='const'>Index</span><span class='op'>::</span><span class='const'>DESCENDING</span>
   <span class='kw'>else</span>
     <span class='id identifier rubyid_raise'>raise</span> <span class='const'>TypeError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Index direction should be :asc or :desc</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>end</span>
-  <span class='id identifier rubyid_collection'>collection</span><span class='period'>.</span><span class='id identifier rubyid_create_index'>create_index</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='lbracket'>[</span><span class='id identifier rubyid_property'>property</span><span class='comma'>,</span> <span class='id identifier rubyid_mongo_direction'>mongo_direction</span><span class='rbracket'>]</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_collection'>collection</span><span class='period'>.</span><span class='id identifier rubyid_indexes'>indexes</span><span class='period'>.</span><span class='id identifier rubyid_create_one'>create_one</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='id identifier rubyid_property'>property</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_mongo_direction'>mongo_direction</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -763,12 +815,12 @@ simple method. If you want multi-key or unique indexes, just call
       <pre class="lines">
 
 
-157
-158
-159</pre>
+181
+182
+183</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/candy/crunch.rb', line 157</span>
+      <pre class="code"><span class="info file"># File 'lib/candy/crunch.rb', line 181</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_password'>password</span>
   <span class='ivar'>@password</span> <span class='op'>||=</span> <span class='const'>Candy</span><span class='period'>.</span><span class='id identifier rubyid_password'>password</span>
@@ -807,12 +859,12 @@ string.</p>
       <pre class="lines">
 
 
-152
-153
-154</pre>
+176
+177
+178</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/candy/crunch.rb', line 152</span>
+      <pre class="code"><span class="info file"># File 'lib/candy/crunch.rb', line 176</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_password='>password=</span><span class='lparen'>(</span><span class='id identifier rubyid_val'>val</span><span class='rparen'>)</span>
   <span class='ivar'>@password</span> <span class='op'>=</span> <span class='id identifier rubyid_val'>val</span>
@@ -848,12 +900,12 @@ string.</p>
       <pre class="lines">
 
 
-145
-146
-147</pre>
+169
+170
+171</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/candy/crunch.rb', line 145</span>
+      <pre class="code"><span class="info file"># File 'lib/candy/crunch.rb', line 169</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_username'>username</span>
   <span class='ivar'>@username</span> <span class='op'>||=</span> <span class='const'>Candy</span><span class='period'>.</span><span class='id identifier rubyid_username'>username</span>
@@ -892,12 +944,12 @@ string.</p>
       <pre class="lines">
 
 
-140
-141
-142</pre>
+164
+165
+166</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/candy/crunch.rb', line 140</span>
+      <pre class="code"><span class="info file"># File 'lib/candy/crunch.rb', line 164</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_username='>username=</span><span class='lparen'>(</span><span class='id identifier rubyid_val'>val</span><span class='rparen'>)</span>
   <span class='ivar'>@username</span> <span class='op'>=</span> <span class='id identifier rubyid_val'>val</span>
@@ -912,9 +964,9 @@ string.</p>
 </div>
 
     <div id="footer">
-  Generated on Thu Aug 14 12:25:59 2014 by
+  Generated on Fri May  1 17:45:36 2015 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.4 (ruby-2.1.2).
+  0.8.7.6 (ruby-2.2.1).
 </div>
 
   </body>

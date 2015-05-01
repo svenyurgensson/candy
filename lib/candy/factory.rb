@@ -1,7 +1,7 @@
 require 'candy/qualified_const_get'
 module Candy
-  
-  # Utility methods that can generate new methods or classes for some of Candy's magic. 
+
+  # Utility methods that can generate new methods or classes for some of Candy's magic.
   module Factory
 
     # Creates a method with the same name as a provided class, in the same namespace as
@@ -18,7 +18,7 @@ module Candy
         CLASS
       end
     end
-      
+
   private
     # Retrieves the 'BlahModule::BleeModule::' part of a class name, so that we
     # can put other things in the same namespace.
@@ -27,4 +27,3 @@ module Candy
     end
   end
 end
-    

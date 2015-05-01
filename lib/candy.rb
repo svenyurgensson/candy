@@ -2,15 +2,15 @@
 
 require 'candy/crunch'
 require 'candy/exceptions'
+require 'candy/wrapper'
+require 'candy/collection'
+
+require 'candy/hash'
+require 'candy/array'
+require 'candy/piece'
+
 
 module Candy
-  # Let's be minimalist here.  Some implementations may not need Collections, or Arrays, etc.
-  # Anything not in the autoload list below is unlikely to be accessed directly by an end user.
-  autoload :CandyHash,  'candy/hash'
-  autoload :CandyArray, 'candy/array'
-  autoload :Wrapper,    'candy/wrapper'
-  autoload :Piece,      'candy/piece'
-  autoload :Collection, 'candy/collection'
 
   # Special keys for Candy metadata in the Mongo store. We try to keep these to a minimum,
   # and we're using moderately obscure Unicode symbols to reduce the odds of collisions.
@@ -20,4 +20,5 @@ module Candy
   # documents in Candy.
   CLASS_KEY = 'ⓒ'.to_sym
   EMBED_KEY = 'ⓔ'.to_sym
+
 end

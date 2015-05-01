@@ -6,7 +6,7 @@
 <title>
   Class: Candy::CandyArray
   
-    &mdash; Documentation by YARD 0.8.7.4
+    &mdash; Documentation by YARD 0.8.7.6
   
 </title>
 
@@ -620,12 +620,12 @@ object and any children.</p>
       <pre class="lines">
 
 
-74
-75
-76</pre>
+76
+77
+78</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/candy/array.rb', line 74</span>
+      <pre class="code"><span class="info file"># File 'lib/candy/array.rb', line 76</span>
 
 <span class='kw'>def</span> <span class='op'>==</span><span class='lparen'>(</span><span class='id identifier rubyid_val'>val</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_to_ary'>to_ary</span> <span class='op'>==</span> <span class='id identifier rubyid_val'>val</span>
@@ -689,9 +689,9 @@ object and any children.</p>
   <div class="discussion">
     
 <p>Set a value at a specified index in our array.  Note that this operation
-_does not_ confirm that the  array in Mongo still matches our current
-state.  If concurrent updates have happened, you might end up overwriting
-something other than what you thought.</p>
+_does not_ confirm that the array in Mongo still matches our current state.
+If concurrent updates have happened, you might end up overwriting something
+other than what you thought.</p>
 
 
   </div>
@@ -754,12 +754,12 @@ something other than what you thought.</p>
       <pre class="lines">
 
 
-62
-63
-64</pre>
+64
+65
+66</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/candy/array.rb', line 62</span>
+      <pre class="code"><span class="info file"># File 'lib/candy/array.rb', line 64</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_candy'>candy</span>
   <span class='ivar'>@__candy</span> <span class='op'>||=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -838,12 +838,12 @@ attribute doesn&#39;t matter because arrays don&#39;t have them.</p>
       <pre class="lines">
 
 
-69
-70
-71</pre>
+71
+72
+73</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/candy/array.rb', line 69</span>
+      <pre class="code"><span class="info file"># File 'lib/candy/array.rb', line 71</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_from_candy'>from_candy</span><span class='lparen'>(</span><span class='id identifier rubyid_array'>array</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_array'>array</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_element'>element</span><span class='op'>|</span> <span class='const'>Wrapper</span><span class='period'>.</span><span class='id identifier rubyid_unwrap'>unwrap</span><span class='lparen'>(</span><span class='id identifier rubyid_element'>element</span><span class='comma'>,</span> <span class='kw'>self</span><span class='rparen'>)</span><span class='rbrace'>}</span>
@@ -883,12 +883,12 @@ attribute doesn&#39;t matter because arrays don&#39;t have them.</p>
       <pre class="lines">
 
 
-79
-80
-81</pre>
+81
+82
+83</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/candy/array.rb', line 79</span>
+      <pre class="code"><span class="info file"># File 'lib/candy/array.rb', line 81</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_length'>length</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_to_ary'>to_ary</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span>
@@ -929,13 +929,17 @@ array. (Thus supporting real-time concurrency for queue-like behavior.)</p>
 56
 57
 58
-59</pre>
+59
+60
+61</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/candy/array.rb', line 55</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_shift'>shift</span><span class='lparen'>(</span><span class='id identifier rubyid_n'>n</span><span class='op'>=</span><span class='int'>1</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_doc'>doc</span> <span class='op'>=</span> <span class='ivar'>@__candy_parent</span><span class='period'>.</span><span class='id identifier rubyid_collection'>collection</span><span class='period'>.</span><span class='id identifier rubyid_find_and_modify'>find_and_modify</span> <span class='label'>query:</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>_id</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='ivar'>@__candy_parent</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='label'>update:</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>$pop</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span><span class='ivar'>@__candy_parent_key</span> <span class='op'>=&gt;</span> <span class='op'>-</span><span class='int'>1</span><span class='rbrace'>}</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='label'>new:</span> <span class='kw'>false</span>
+  <span class='id identifier rubyid_doc'>doc</span> <span class='op'>=</span> <span class='ivar'>@__candy_parent</span><span class='period'>.</span><span class='id identifier rubyid_collection'>collection</span><span class='period'>.</span>
+        <span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>_id</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='ivar'>@__candy_parent</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='rparen'>)</span><span class='period'>.</span>
+        <span class='id identifier rubyid_find_one_and_update'>find_one_and_update</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>$pop</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span><span class='ivar'>@__candy_parent_key</span> <span class='op'>=&gt;</span> <span class='op'>-</span><span class='int'>1</span><span class='rbrace'>}</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='ivar'>@__candy</span> <span class='op'>=</span> <span class='id identifier rubyid_from_candy'>from_candy</span><span class='lparen'>(</span><span class='id identifier rubyid_doc'>doc</span><span class='lbracket'>[</span><span class='ivar'>@__candy_parent_key</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rbracket'>]</span><span class='rparen'>)</span>
   <span class='ivar'>@__candy</span><span class='period'>.</span><span class='id identifier rubyid_shift'>shift</span>
 <span class='kw'>end</span></pre>
@@ -949,9 +953,9 @@ array. (Thus supporting real-time concurrency for queue-like behavior.)</p>
 </div>
 
     <div id="footer">
-  Generated on Thu Aug 14 12:26:00 2014 by
+  Generated on Fri May  1 17:45:36 2015 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.4 (ruby-2.1.2).
+  0.8.7.6 (ruby-2.2.1).
 </div>
 
   </body>

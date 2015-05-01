@@ -15,7 +15,7 @@ When you mix the **Candy::Piece** module into a class, the class gains a Mongo c
     class Person
       include Candy::Piece
     end
-    
+
     me = Person.new
     me.last_name = 'Eley'   # New record created and saved to Mongo
     me.id                   # => ObjectId(4bb606f9609c8417cf00004b) or thereabouts
@@ -32,7 +32,7 @@ We got 'em.  Candy pieces can contain each other recursively, to any arbitrary d
     me.spouse = Person.piece(first_name: 'Anna', eyes: :blue)
     me.spouse.eyes            # => :blue
     me.favorites.scotch[1]    # => 'Balvenie Single Barrel'
-                              
+
 ### Retrieval
 
 Again, transparency is the key. The same `method_missing` tactic applies to class methods to retrieve individual records:
@@ -40,7 +40,7 @@ Again, transparency is the key. The same `method_missing` tactic applies to clas
     Person.last_name('Smith')  # Returns the first Smith
     Person.age(21)             # Returns the first legal drinker (in the U.S.)
     Person(12345)              # Returns the person with an _id of 12345
-    
+
 Take note of that last example.  It's moderately deep magic, and we take care not to stomp on any class-like methods you've already defined.  But it's the simplest possible way to retrieve a record by ID.  `Person.first('_id' => 12345)` works too, of course.
 
 ### Collections
@@ -51,7 +51,7 @@ Some applications don't need to iterate through all records of a query; you migh
       include Candy::Collection
       collects :person   # Declares the Mongo collection is 'Person'
     end                  # (and so is the Candy::Piece class)
-    
+
     People.last_name('Smith')                         # Returns an enumeration of all Smiths
     People.age(19).sort(:birthdate, :down).limit(10)  # We can chain options
     People(limit: 47, occupation: :ronin)             # Or People.all(params) or People.new(params)
@@ -70,13 +70,13 @@ You can also, of course, just do `People.new()` with a bunch of query conditions
 * **MongoDB 1.4+**  You could probably get away with 1.2 for _some_ functionality, but the new array operators and [findAndModify][3] were too useful to pass up. It's a safe and easy upgrade, so if you're not on the latest Mongo yet...  Well, you're not hurting kittens, but you're hurting _yourself._
 
 * **mongo gem 0.19+** The Ruby gem seems to lag behind actual Mongo development by quite a bit sometimes. 0.19.1 is the latest at the time of this writing, and some commands (e.g. `findAndModify`) have been implemented in Candy because the gem doesn't have methods for them yet. We'll continue to streamline our code as the driver allows.
-  
+
 ## Installation
 
 Come on, you've done this before:
 
     $ sudo gem install candy
-    
+
 (Or leave off the _sudo_ if you're smart enough to be using [RVM][4].)
 
 ## Configuration
@@ -86,13 +86,13 @@ The simplest possible thing that works:
     class Zagnut
       include Candy::Piece
     end
-    
+
 That's it. Honest. Some Mongo plumbing is hooked in and instantiated the first time the `.collection` attribute is accessed:
- 
+
     Zagnut.connection # => Defaults to localhost port 27017
     Zagnut.db         # => Defaults to your username, or 'candy' if unknown
     Zagnut.collection # => Defaults to the class name ('Zagnut')
-    
+
 You can override the DB or collection by providing name strings or **Mongo::DB** and **Mongo::Collection** objects. Or you can set certain module-level properties to make it easier for multiple Candy classes in an application to use the same database:
 
 * **Candy.host**
@@ -110,14 +110,14 @@ The trick here is to think of Candy objects like OpenStructs.  Or if that's too 
     class Zagnut
       include Candy::Piece
     end
-    
+
     zag = Zagnut.new      # A blank document enters the Zagnut collection
     zag.taste = "Chewy!"  # Properties are created and saved as they're used
     zag.calories = 600
-    
+
     nut = Zagnut.taste ("Chewy!")  # Or Zagnut(taste: 'Chewy!')
     nut.calories          # => 600
-    
+
     kingsize = Zagnut.new
     kingsize.calories = 900  # Or kingsize[:calories] = 900
     kingsize.ingredients = ['cocoa', 'peanut butter']
@@ -125,16 +125,16 @@ The trick here is to think of Candy objects like OpenStructs.  Or if that's too 
     kingsize.nutrition = { sodium: '115mg', protein: '3g' }
     kingsize.nutrition.fat = {saturated: '4g', total: '9g'}
     kingsize[:nutrition][:fat][:saturated]   # => '4g'
-    
+
     class Zagnuts
       include Candy::Collection
       collects Zagnut
     end
-    
+
     bars = Zagnuts      # Or Zagnuts.all or Zagnuts.new
     bar.count           # => 2
     sum = Zagnuts.inject {|sum,bar| sum + bar.calories}  # => 1500
-    
+
 Note that writes are always live, but reads hold onto the retrieved document and cache its values to avoid query delays.  You can force a requery at any time with the `refresh` method.  (An expiration feature wherein documents are requeried after a set time has elapsed is being considered for the future.)
 
 ## Advanced Classes
@@ -143,29 +143,29 @@ Candy properties are fundamentally just entries in a hash, with some hooks to th
 
     class Weight
       include Candy::Piece
-      
+
       attr_accessor :gravity  # This won't be stored in MongoDB
-      
+
       def kilograms
         pounds * 2.2046  # 'pounds' is undeclared, so Candy retrieves it
       end
 
       def kilograms=(val)
         self.pounds = val/2.2046  # 'pounds=' is undeclared; Candy stores it
-      end 
+      end
     end
-     
+
 Embedded hashes are of type **CandyHash** unless you explicitly assign an object that includes **Candy::Piece**.  (CandyHash itself is really just a Candy piece that doesn't store its classname.)  If you want truly quick-and-dirty persistence, you can even just use a CandyHash as a standalone object and skip creating your own classes:
 
     hash = CandyHash.new(foo: 'bar')
     hash[:yoo] = :yar   # Persists to the 'candy' collection by default
     hash.too = [:tar, :car, :far]
-    
+
     hash2 = CandyHash(hash.id)
     hash2.foo       # => 'bar'
     hash2.yoo       # => :yar
     hash2[:too][1]  # => :car
-    
+
 Embedded arrays are of type **CandyArray**.  Unlike CandyHashes, CandyArrays do _not_ include **Candy::Piece** and cannot operate as standalone objects.  They only make sense when embedded in a Candy piece.  That's just the way Mongo works.
 
 ## Good Practices
@@ -178,7 +178,7 @@ The long-term plan includes support for ActiveModel features as an optional exte
 
   class Person
     include Candy::Piece
-    
+
     def email=(val)
       raise "Invalid email address!" if val !~ /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/
       super
@@ -205,7 +205,7 @@ Dirt simple.  Use a method in the collection class.
     class People
       include Candy::Collection
       collects :person
-      
+
       def voters
         age('$gt' => 18).citizen(true)
       end
@@ -223,9 +223,9 @@ Instant document creation makes it problematic to wait to see if a user's going 
         super
       end
     end
-    
+
     p = Person.new(last_name: 'Eley', email: 'sfeley@gmail.com')   # This is valid
-    
+
 Or you can use the above scoping trick to make sure your application's standard collections operate only on records that are "complete."  You could even make it intrinsic to the class itself:
 
     class ValidPeople < People
@@ -259,7 +259,7 @@ Even relative to other ORMs, Candy's pretty opinionated.  Here are some of the o
 * Frameworks that are too large or complex to be beautiful can sometimes be broken down into smaller frameworks that _are_ beautiful.
 
 * Beautiful frameworks should be transparent and non-constraining.  A _truly_ beautiful framework is one you have to squint to see.
- 
+
 * _Magic_ (defined as "behavior whose workings are not immediately apparent") is fine in a framework. In a sense it's what frameworks _are._  But magical behavior should be restrained, consistent, clearly documented, and must not violate the Principle of Least Surprise.
 
 * Thomas Jefferson wrote that software frameworks should be subject to revolution every couple of years.  ("The tree of agility must be refreshed from time to time with the blood of senior architects and project managers.  It is its natural manure.")  I will be disappointed if Candy is not roundly decried for being too complex, bloated, and intrusive by 2013 at the latest.
@@ -314,8 +314,8 @@ We have the usual array of stuff for your learning pleasure...
 * **Discussion list:** <http://groups.google.com/group/candy-users>
 
 ## Contributing
- 
-At this early stage, one of the best things you could do is just to tell me that you have an interest in using this thing. Join the [discussion list][5] and let us know what you think. 
+
+At this early stage, one of the best things you could do is just to tell me that you have an interest in using this thing. Join the [discussion list][5] and let us know what you think.
 
 Beyond that, report issues, please.  If you want to fork it and add features, fabulous.  Send me a pull request.
 

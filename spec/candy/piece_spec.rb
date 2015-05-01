@@ -26,7 +26,7 @@ describe Candy::Piece do
 
 
   it "can be given a hash of data to insert immediately" do
-    that = Zagnut.new({calories: 500, morsels: "chewy"})
+    Zagnut.new({calories: 500, morsels: "chewy"})
     @verifier.find(calories: 500).first["morsels"].should == "chewy"
   end
 
@@ -248,7 +248,7 @@ describe Candy::Piece do
     end
 
     it "removes the object from the database" do
-      @verifier.find(flavor: 'gross').first['color'].should == 'green'
+      @verifier.find(flavor: 'gross').first['color'].should eq('green')
       @eat_me.remove
       @verifier.find(flavor: 'gross').first.should be_nil
     end

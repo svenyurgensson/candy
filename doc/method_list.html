@@ -20,7 +20,11 @@
   </head>
   <body>
     <script type="text/javascript" charset="utf-8">
-      if (window.top.frames.main) {
+      var hasFrames = false;
+      try {
+        hasFrames = window.top.frames.main ? true : false;
+      } catch (e) { }
+      if (hasFrames) {
         document.getElementById('base_target').target = 'main';
         document.body.className = 'frames';
       }
@@ -54,14 +58,14 @@
   
 
   <li class="r2 ">
-    <span class='object_link'><a href="Candy/CandyArray.html#%3D%3D-instance_method" title="Candy::CandyArray#== (method)">#==</a></span>
-    <small>Candy::CandyArray</small>
+    <span class='object_link'><a href="Candy/Piece.html#%3D%3D-instance_method" title="Candy::Piece#== (method)">#==</a></span>
+    <small>Candy::Piece</small>
   </li>
   
 
   <li class="r1 ">
-    <span class='object_link'><a href="Candy/Piece.html#%3D%3D-instance_method" title="Candy::Piece#== (method)">#==</a></span>
-    <small>Candy::Piece</small>
+    <span class='object_link'><a href="Candy/CandyArray.html#%3D%3D-instance_method" title="Candy::CandyArray#== (method)">#==</a></span>
+    <small>Candy::CandyArray</small>
   </li>
   
 
@@ -102,14 +106,14 @@
   
 
   <li class="r2 ">
-    <span class='object_link'><a href="Candy/Piece.html#candy-instance_method" title="Candy::Piece#candy (method)">#candy</a></span>
-    <small>Candy::Piece</small>
+    <span class='object_link'><a href="Candy/CandyArray.html#candy-instance_method" title="Candy::CandyArray#candy (method)">#candy</a></span>
+    <small>Candy::CandyArray</small>
   </li>
   
 
   <li class="r1 ">
-    <span class='object_link'><a href="Candy/CandyArray.html#candy-instance_method" title="Candy::CandyArray#candy (method)">#candy</a></span>
-    <small>Candy::CandyArray</small>
+    <span class='object_link'><a href="Candy/Piece.html#candy-instance_method" title="Candy::Piece#candy (method)">#candy</a></span>
+    <small>Candy::Piece</small>
   </li>
   
 
@@ -120,14 +124,14 @@
   
 
   <li class="r1 ">
-    <span class='object_link'><a href="Candy/Crunch/ClassMethods.html#collection-instance_method" title="Candy::Crunch::ClassMethods#collection (method)">#collection</a></span>
-    <small>Candy::Crunch::ClassMethods</small>
+    <span class='object_link'><a href="Candy/Crunch.html#collection-instance_method" title="Candy::Crunch#collection (method)">#collection</a></span>
+    <small>Candy::Crunch</small>
   </li>
   
 
   <li class="r2 ">
-    <span class='object_link'><a href="Candy/Crunch.html#collection-instance_method" title="Candy::Crunch#collection (method)">#collection</a></span>
-    <small>Candy::Crunch</small>
+    <span class='object_link'><a href="Candy/Crunch/ClassMethods.html#collection-instance_method" title="Candy::Crunch::ClassMethods#collection (method)">#collection</a></span>
+    <small>Candy::Crunch::ClassMethods</small>
   </li>
   
 
@@ -150,26 +154,38 @@
   
 
   <li class="r2 ">
-    <span class='object_link'><a href="Candy.html#connection-class_method" title="Candy.connection (method)">connection</a></span>
-    <small>Candy</small>
-  </li>
-  
-
-  <li class="r1 ">
     <span class='object_link'><a href="Candy/Crunch/ClassMethods.html#connection-instance_method" title="Candy::Crunch::ClassMethods#connection (method)">#connection</a></span>
     <small>Candy::Crunch::ClassMethods</small>
   </li>
   
 
+  <li class="r1 ">
+    <span class='object_link'><a href="Candy.html#connection-class_method" title="Candy.connection (method)">connection</a></span>
+    <small>Candy</small>
+  </li>
+  
+
   <li class="r2 ">
+    <span class='object_link'><a href="Candy.html#connection%3D-class_method" title="Candy.connection= (method)">connection=</a></span>
+    <small>Candy</small>
+  </li>
+  
+
+  <li class="r1 ">
     <span class='object_link'><a href="Candy/Crunch/ClassMethods.html#connection%3D-instance_method" title="Candy::Crunch::ClassMethods#connection= (method)">#connection=</a></span>
     <small>Candy::Crunch::ClassMethods</small>
   </li>
   
 
-  <li class="r1 ">
-    <span class='object_link'><a href="Candy.html#connection%3D-class_method" title="Candy.connection= (method)">connection=</a></span>
+  <li class="r2 ">
+    <span class='object_link'><a href="Candy.html#connection_logger-class_method" title="Candy.connection_logger (method)">connection_logger</a></span>
     <small>Candy</small>
+  </li>
+  
+
+  <li class="r1 ">
+    <span class='object_link'><a href="Candy/Crunch/ClassMethods.html#connection_logger-instance_method" title="Candy::Crunch::ClassMethods#connection_logger (method)">#connection_logger</a></span>
+    <small>Candy::Crunch::ClassMethods</small>
   </li>
   
 
@@ -186,32 +202,32 @@
   
 
   <li class="r2 ">
+    <span class='object_link'><a href="Candy/Collection/ClassMethods.html#count-instance_method" title="Candy::Collection::ClassMethods#count (method)">#count</a></span>
+    <small>Candy::Collection::ClassMethods</small>
+  </li>
+  
+
+  <li class="r1 ">
     <span class='object_link'><a href="Candy.html#db-class_method" title="Candy.db (method)">db</a></span>
     <small>Candy</small>
   </li>
   
 
-  <li class="r1 ">
+  <li class="r2 ">
     <span class='object_link'><a href="Candy/Crunch/ClassMethods.html#db-instance_method" title="Candy::Crunch::ClassMethods#db (method)">#db</a></span>
     <small>Candy::Crunch::ClassMethods</small>
   </li>
   
 
-  <li class="r2 ">
+  <li class="r1 ">
     <span class='object_link'><a href="Candy/Crunch/ClassMethods.html#db%3D-instance_method" title="Candy::Crunch::ClassMethods#db= (method)">#db=</a></span>
     <small>Candy::Crunch::ClassMethods</small>
   </li>
   
 
-  <li class="r1 ">
+  <li class="r2 ">
     <span class='object_link'><a href="Candy.html#db%3D-class_method" title="Candy.db= (method)">db=</a></span>
     <small>Candy</small>
-  </li>
-  
-
-  <li class="r2 ">
-    <span class='object_link'><a href="Candy/CandyArray.html#each-instance_method" title="Candy::CandyArray#each (method)">#each</a></span>
-    <small>Candy::CandyArray</small>
   </li>
   
 
@@ -222,26 +238,26 @@
   
 
   <li class="r2 ">
+    <span class='object_link'><a href="Candy/CandyArray.html#each-instance_method" title="Candy::CandyArray#each (method)">#each</a></span>
+    <small>Candy::CandyArray</small>
+  </li>
+  
+
+  <li class="r1 ">
     <span class='object_link'><a href="Candy/CandyArray.html#embed-class_method" title="Candy::CandyArray.embed (method)">embed</a></span>
     <small>Candy::CandyArray</small>
   </li>
   
 
-  <li class="r1 ">
+  <li class="r2 ">
     <span class='object_link'><a href="Candy/Piece/ClassMethods.html#embed-instance_method" title="Candy::Piece::ClassMethods#embed (method)">#embed</a></span>
     <small>Candy::Piece::ClassMethods</small>
   </li>
   
 
-  <li class="r2 ">
+  <li class="r1 ">
     <span class='object_link'><a href="Candy/Piece/ClassMethods.html#first-instance_method" title="Candy::Piece::ClassMethods#first (method)">#first</a></span>
     <small>Candy::Piece::ClassMethods</small>
-  </li>
-  
-
-  <li class="r1 ">
-    <span class='object_link'><a href="Candy/CandyArray.html#from_candy-instance_method" title="Candy::CandyArray#from_candy (method)">#from_candy</a></span>
-    <small>Candy::CandyArray</small>
   </li>
   
 
@@ -252,44 +268,56 @@
   
 
   <li class="r1 ">
+    <span class='object_link'><a href="Candy/CandyArray.html#from_candy-instance_method" title="Candy::CandyArray#from_candy (method)">#from_candy</a></span>
+    <small>Candy::CandyArray</small>
+  </li>
+  
+
+  <li class="r2 ">
     <span class='object_link'><a href="Candy.html#host-class_method" title="Candy.host (method)">host</a></span>
     <small>Candy</small>
   </li>
   
 
-  <li class="r2 ">
+  <li class="r1 ">
     <span class='object_link'><a href="Candy.html#host%3D-class_method" title="Candy.host= (method)">host=</a></span>
     <small>Candy</small>
   </li>
   
 
-  <li class="r1 ">
+  <li class="r2 ">
     <span class='object_link'><a href="Candy/Piece.html#id-instance_method" title="Candy::Piece#id (method)">#id</a></span>
     <small>Candy::Piece</small>
   </li>
   
 
-  <li class="r2 ">
+  <li class="r1 ">
     <span class='object_link'><a href="Candy/Crunch/Document.html#inc-instance_method" title="Candy::Crunch::Document#inc (method)">#inc</a></span>
     <small>Candy::Crunch::Document</small>
   </li>
   
 
-  <li class="r1 ">
+  <li class="r2 ">
     <span class='object_link'><a href="Candy/Crunch/Document.html#inc%21-instance_method" title="Candy::Crunch::Document#inc! (method)">#inc!</a></span>
     <small>Candy::Crunch::Document</small>
   </li>
   
 
-  <li class="r2 ">
+  <li class="r1 ">
     <span class='object_link'><a href="Candy/Crunch.html#included-class_method" title="Candy::Crunch.included (method)">included</a></span>
     <small>Candy::Crunch</small>
   </li>
   
 
-  <li class="r1 ">
+  <li class="r2 ">
     <span class='object_link'><a href="Candy/Crunch/ClassMethods.html#index-instance_method" title="Candy::Crunch::ClassMethods#index (method)">#index</a></span>
     <small>Candy::Crunch::ClassMethods</small>
+  </li>
+  
+
+  <li class="r1 ">
+    <span class='object_link'><a href="Candy/CandyArray.html#initialize-instance_method" title="Candy::CandyArray#initialize (method)">#initialize</a></span>
+    <small>Candy::CandyArray</small>
   </li>
   
 
@@ -306,32 +334,20 @@
   
 
   <li class="r2 ">
-    <span class='object_link'><a href="Candy/CandyArray.html#initialize-instance_method" title="Candy::CandyArray#initialize (method)">#initialize</a></span>
-    <small>Candy::CandyArray</small>
-  </li>
-  
-
-  <li class="r1 ">
     <span class='object_link'><a href="Candy/Piece.html#keys-instance_method" title="Candy::Piece#keys (method)">#keys</a></span>
     <small>Candy::Piece</small>
   </li>
   
 
-  <li class="r2 ">
+  <li class="r1 ">
     <span class='object_link'><a href="Candy/CandyArray.html#length-instance_method" title="Candy::CandyArray#length (method)">#length</a></span>
     <small>Candy::CandyArray</small>
   </li>
   
 
-  <li class="r1 ">
+  <li class="r2 ">
     <span class='object_link'><a href="Candy/Factory.html#magic_method-class_method" title="Candy::Factory.magic_method (method)">magic_method</a></span>
     <small>Candy::Factory</small>
-  </li>
-  
-
-  <li class="r2 ">
-    <span class='object_link'><a href="Candy/Piece/ClassMethods.html#method_missing-instance_method" title="Candy::Piece::ClassMethods#method_missing (method)">#method_missing</a></span>
-    <small>Candy::Piece::ClassMethods</small>
   </li>
   
 
@@ -342,20 +358,20 @@
   
 
   <li class="r2 ">
-    <span class='object_link'><a href="Candy/Piece.html#method_missing-instance_method" title="Candy::Piece#method_missing (method)">#method_missing</a></span>
-    <small>Candy::Piece</small>
-  </li>
-  
-
-  <li class="r1 ">
     <span class='object_link'><a href="Candy/Collection/ClassMethods.html#method_missing-instance_method" title="Candy::Collection::ClassMethods#method_missing (method)">#method_missing</a></span>
     <small>Candy::Collection::ClassMethods</small>
   </li>
   
 
+  <li class="r1 ">
+    <span class='object_link'><a href="Candy/Piece/ClassMethods.html#method_missing-instance_method" title="Candy::Piece::ClassMethods#method_missing (method)">#method_missing</a></span>
+    <small>Candy::Piece::ClassMethods</small>
+  </li>
+  
+
   <li class="r2 ">
-    <span class='object_link'><a href="Candy/Collection.html#next-instance_method" title="Candy::Collection#next (method)">#next</a></span>
-    <small>Candy::Collection</small>
+    <span class='object_link'><a href="Candy/Piece.html#method_missing-instance_method" title="Candy::Piece#method_missing (method)">#method_missing</a></span>
+    <small>Candy::Piece</small>
   </li>
   
 
@@ -474,44 +490,44 @@
   
 
   <li class="r2 ">
-    <span class='object_link'><a href="Candy/Piece.html#to_s-instance_method" title="Candy::Piece#to_s (method)">#to_s</a></span>
+    <span class='object_link'><a href="Candy/Piece.html#to_h-instance_method" title="Candy::Piece#to_h (method)">#to_h</a></span>
     <small>Candy::Piece</small>
   </li>
   
 
   <li class="r1 ">
+    <span class='object_link'><a href="Candy/Piece.html#to_s-instance_method" title="Candy::Piece#to_s (method)">#to_s</a></span>
+    <small>Candy::Piece</small>
+  </li>
+  
+
+  <li class="r2 ">
     <span class='object_link'><a href="Candy/Wrapper.html#unwrap-class_method" title="Candy::Wrapper.unwrap (method)">unwrap</a></span>
     <small>Candy::Wrapper</small>
   </li>
   
 
-  <li class="r2 ">
+  <li class="r1 ">
     <span class='object_link'><a href="Candy/Wrapper.html#unwrap_hash-class_method" title="Candy::Wrapper.unwrap_hash (method)">unwrap_hash</a></span>
     <small>Candy::Wrapper</small>
   </li>
   
 
-  <li class="r1 ">
+  <li class="r2 ">
     <span class='object_link'><a href="Candy/Wrapper.html#unwrap_key-class_method" title="Candy::Wrapper.unwrap_key (method)">unwrap_key</a></span>
     <small>Candy::Wrapper</small>
   </li>
   
 
-  <li class="r2 ">
+  <li class="r1 ">
     <span class='object_link'><a href="Candy/Wrapper.html#unwrap_object-class_method" title="Candy::Wrapper.unwrap_object (method)">unwrap_object</a></span>
     <small>Candy::Wrapper</small>
   </li>
   
 
-  <li class="r1 ">
+  <li class="r2 ">
     <span class='object_link'><a href="Candy/Piece/ClassMethods.html#update-instance_method" title="Candy::Piece::ClassMethods#update (method)">#update</a></span>
     <small>Candy::Piece::ClassMethods</small>
-  </li>
-  
-
-  <li class="r2 ">
-    <span class='object_link'><a href="Candy.html#username-class_method" title="Candy.username (method)">username</a></span>
-    <small>Candy</small>
   </li>
   
 
@@ -522,8 +538,8 @@
   
 
   <li class="r2 ">
-    <span class='object_link'><a href="Candy/Crunch/ClassMethods.html#username%3D-instance_method" title="Candy::Crunch::ClassMethods#username= (method)">#username=</a></span>
-    <small>Candy::Crunch::ClassMethods</small>
+    <span class='object_link'><a href="Candy.html#username-class_method" title="Candy.username (method)">username</a></span>
+    <small>Candy</small>
   </li>
   
 
@@ -534,36 +550,42 @@
   
 
   <li class="r2 ">
+    <span class='object_link'><a href="Candy/Crunch/ClassMethods.html#username%3D-instance_method" title="Candy::Crunch::ClassMethods#username= (method)">#username=</a></span>
+    <small>Candy::Crunch::ClassMethods</small>
+  </li>
+  
+
+  <li class="r1 ">
     <span class='object_link'><a href="Candy/Piece.html#values-instance_method" title="Candy::Piece#values (method)">#values</a></span>
     <small>Candy::Piece</small>
   </li>
   
 
-  <li class="r1 ">
+  <li class="r2 ">
     <span class='object_link'><a href="Candy/Wrapper.html#wrap-class_method" title="Candy::Wrapper.wrap (method)">wrap</a></span>
     <small>Candy::Wrapper</small>
   </li>
   
 
-  <li class="r2 ">
+  <li class="r1 ">
     <span class='object_link'><a href="Candy/Wrapper.html#wrap_array-class_method" title="Candy::Wrapper.wrap_array (method)">wrap_array</a></span>
     <small>Candy::Wrapper</small>
   </li>
   
 
-  <li class="r1 ">
+  <li class="r2 ">
     <span class='object_link'><a href="Candy/Wrapper.html#wrap_hash-class_method" title="Candy::Wrapper.wrap_hash (method)">wrap_hash</a></span>
     <small>Candy::Wrapper</small>
   </li>
   
 
-  <li class="r2 ">
+  <li class="r1 ">
     <span class='object_link'><a href="Candy/Wrapper.html#wrap_key-class_method" title="Candy::Wrapper.wrap_key (method)">wrap_key</a></span>
     <small>Candy::Wrapper</small>
   </li>
   
 
-  <li class="r1 ">
+  <li class="r2 ">
     <span class='object_link'><a href="Candy/Wrapper.html#wrap_object-class_method" title="Candy::Wrapper.wrap_object (method)">wrap_object</a></span>
     <small>Candy::Wrapper</small>
   </li>

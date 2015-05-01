@@ -1,5 +1,6 @@
 require 'mongo'
 require 'etc'  # To get the current username for database default
+require 'candy/crunch/document'
 
 module Candy
   # Our option accessors live here so that someone could include just the
@@ -116,7 +117,6 @@ module Candy
 
   # All of the hard crunchy bits that connect us to a collection within a Mongo database.
   module Crunch
-    autoload :Document, 'candy/crunch/document'
 
     module ClassMethods
 
@@ -149,7 +149,7 @@ module Candy
         when nil
           @db = nil
         else
-          raise ConnectionError, "The db attribute needs a Mongo::DB object or a name string."
+          raise ConnectionError, "The db attribute needs a Mongo::Database object or a name string."
         end
       end
 

@@ -27,5 +27,5 @@ method calls like 'save' and 'find.'
   s.add_development_dependency 'rspec', '~> 2.7.0'
   s.add_development_dependency 'mocha', '~> 0.10.0'
   s.add_development_dependency 'pry'
-  s.add_development_dependency 'byebug'
+  s.add_development_dependency 'pry-byebug'
 end

@@ -6,6 +6,7 @@ require 'rspec/autorun'
 require 'mocha'
 
 require 'pry'
+require 'pry-byebug'
 
 Mongo::Logger.logger.level = 1
 

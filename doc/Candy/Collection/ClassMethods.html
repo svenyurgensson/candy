@@ -6,7 +6,7 @@
 <title>
   Module: Candy::Collection::ClassMethods
   
-    &mdash; Documentation by YARD 0.8.7.4
+    &mdash; Documentation by YARD 0.8.7.6
   
 </title>
 
@@ -186,6 +186,28 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#count-instance_method" title="#count (instance method)">- (Object) <strong>count</strong>(options = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#method_missing-instance_method" title="#method_missing (instance method)">- (Object) <strong>method_missing</strong>(name, *args, &amp;block) </a>
     
 
@@ -218,7 +240,7 @@
   
   
   <h3 class="inherited">Methods included from <span class='object_link'><a href="../Crunch/ClassMethods.html" title="Candy::Crunch::ClassMethods (module)">Candy::Crunch::ClassMethods</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="../Crunch/ClassMethods.html#collection-instance_method" title="Candy::Crunch::ClassMethods#collection (method)">#collection</a></span>, <span class='object_link'><a href="../Crunch/ClassMethods.html#collection%3D-instance_method" title="Candy::Crunch::ClassMethods#collection= (method)">#collection=</a></span>, <span class='object_link'><a href="../Crunch/ClassMethods.html#connection-instance_method" title="Candy::Crunch::ClassMethods#connection (method)">#connection</a></span>, <span class='object_link'><a href="../Crunch/ClassMethods.html#connection%3D-instance_method" title="Candy::Crunch::ClassMethods#connection= (method)">#connection=</a></span>, <span class='object_link'><a href="../Crunch/ClassMethods.html#db-instance_method" title="Candy::Crunch::ClassMethods#db (method)">#db</a></span>, <span class='object_link'><a href="../Crunch/ClassMethods.html#db%3D-instance_method" title="Candy::Crunch::ClassMethods#db= (method)">#db=</a></span>, <span class='object_link'><a href="../Crunch/ClassMethods.html#index-instance_method" title="Candy::Crunch::ClassMethods#index (method)">#index</a></span>, <span class='object_link'><a href="../Crunch/ClassMethods.html#password-instance_method" title="Candy::Crunch::ClassMethods#password (method)">#password</a></span>, <span class='object_link'><a href="../Crunch/ClassMethods.html#password%3D-instance_method" title="Candy::Crunch::ClassMethods#password= (method)">#password=</a></span>, <span class='object_link'><a href="../Crunch/ClassMethods.html#username-instance_method" title="Candy::Crunch::ClassMethods#username (method)">#username</a></span>, <span class='object_link'><a href="../Crunch/ClassMethods.html#username%3D-instance_method" title="Candy::Crunch::ClassMethods#username= (method)">#username=</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="../Crunch/ClassMethods.html#collection-instance_method" title="Candy::Crunch::ClassMethods#collection (method)">#collection</a></span>, <span class='object_link'><a href="../Crunch/ClassMethods.html#collection%3D-instance_method" title="Candy::Crunch::ClassMethods#collection= (method)">#collection=</a></span>, <span class='object_link'><a href="../Crunch/ClassMethods.html#connection-instance_method" title="Candy::Crunch::ClassMethods#connection (method)">#connection</a></span>, <span class='object_link'><a href="../Crunch/ClassMethods.html#connection%3D-instance_method" title="Candy::Crunch::ClassMethods#connection= (method)">#connection=</a></span>, <span class='object_link'><a href="../Crunch/ClassMethods.html#connection_logger-instance_method" title="Candy::Crunch::ClassMethods#connection_logger (method)">#connection_logger</a></span>, <span class='object_link'><a href="../Crunch/ClassMethods.html#db-instance_method" title="Candy::Crunch::ClassMethods#db (method)">#db</a></span>, <span class='object_link'><a href="../Crunch/ClassMethods.html#db%3D-instance_method" title="Candy::Crunch::ClassMethods#db= (method)">#db=</a></span>, <span class='object_link'><a href="../Crunch/ClassMethods.html#index-instance_method" title="Candy::Crunch::ClassMethods#index (method)">#index</a></span>, <span class='object_link'><a href="../Crunch/ClassMethods.html#password-instance_method" title="Candy::Crunch::ClassMethods#password (method)">#password</a></span>, <span class='object_link'><a href="../Crunch/ClassMethods.html#password%3D-instance_method" title="Candy::Crunch::ClassMethods#password= (method)">#password=</a></span>, <span class='object_link'><a href="../Crunch/ClassMethods.html#username-instance_method" title="Candy::Crunch::ClassMethods#username (method)">#username</a></span>, <span class='object_link'><a href="../Crunch/ClassMethods.html#username%3D-instance_method" title="Candy::Crunch::ClassMethods#username= (method)">#username=</a></span></p>
 <div id="method_missing_details" class="method_details_list">
   <h2>Dynamic Method Handling</h2>
   <p class="notice this">
@@ -241,13 +263,13 @@
       <pre class="lines">
 
 
-34
-35
-36
-37</pre>
+38
+39
+40
+41</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/candy/collection.rb', line 34</span>
+      <pre class="code"><span class="info file"># File 'lib/candy/collection.rb', line 38</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_method_missing'>method_missing</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_coll'>coll</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
@@ -355,9 +377,9 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Sets the collection that all queries run against.  You can also  specify a
+<p>Sets the collection that all queries run against.  You can also specify a
 class that includes Candy::Piece that will be instantiated for all found
-records. Otherwise the collection name is used as a  default, and CandyHash
+records. Otherwise the collection name is used as a default, and CandyHash
 is a fallback.</p>
 
 
@@ -393,14 +415,44 @@ is a fallback.</p>
 </table>
 </div>
     
+      <div class="method_details ">
+  <h3 class="signature " id="count-instance_method">
+  
+    - (<tt>Object</tt>) <strong>count</strong>(options = {}) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+34
+35
+36</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/candy/collection.rb', line 34</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_count'>count</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_collection'>collection</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
   </div>
 
 </div>
 
     <div id="footer">
-  Generated on Thu Aug 14 12:26:00 2014 by
+  Generated on Fri May  1 17:45:36 2015 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.4 (ruby-2.1.2).
+  0.8.7.6 (ruby-2.2.1).
 </div>
 
   </body>

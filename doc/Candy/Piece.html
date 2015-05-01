@@ -6,7 +6,7 @@
 <title>
   Module: Candy::Piece
   
-    &mdash; Documentation by YARD 0.8.7.4
+    &mdash; Documentation by YARD 0.8.7.6
   
 </title>
 
@@ -149,7 +149,7 @@ else or use the magic Candy() factory.</p>
   
     <span class="summary_desc"><div class='inline'>
 <p>Objects are equal if they point to the same MongoDB record (unless both
-have IDs of nil, in which case  they&#39;re never equal.).</p>
+have IDs of nil, in which case they&#39;re never equal.).</p>
 </div></span>
   
 </li>
@@ -423,6 +423,30 @@ any embedded Candy objects.</p>
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#to_h-instance_method" title="#to_h (instance method)">- (Object) <strong>to_h</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Convert data to hash with a nesting.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#to_s-instance_method" title="#to_s (instance method)">- (Object) <strong>to_s</strong> </a>
     
 
@@ -586,7 +610,7 @@ return that value from this record in the Mongo collection.</p>
   <div class="discussion">
     
 <p>Objects are equal if they point to the same MongoDB record (unless both
-have IDs of nil, in which case  they&#39;re never equal.)</p>
+have IDs of nil, in which case they&#39;re never equal.)</p>
 
 
   </div>
@@ -612,7 +636,7 @@ have IDs of nil, in which case  they&#39;re never equal.)</p>
 <span class='kw'>def</span> <span class='op'>==</span><span class='lparen'>(</span><span class='id identifier rubyid_subject'>subject</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='id identifier rubyid_id'>id</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>unless</span> <span class='id identifier rubyid_subject'>subject</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:id</span><span class='rparen'>)</span>
-  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span> <span class='op'>==</span> <span class='id identifier rubyid_subject'>subject</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span> 
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span> <span class='op'>==</span> <span class='id identifier rubyid_subject'>subject</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -655,7 +679,7 @@ symbols in the hash.</p>
       <pre class="code"><span class="info file"># File 'lib/candy/piece.rb', line 138</span>
 
 <span class='kw'>def</span> <span class='op'>[]</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_candy'>candy</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span> 
+  <span class='id identifier rubyid_candy'>candy</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -777,19 +801,25 @@ any embedded Candy objects.</p>
       <pre class="lines">
 
 
-180
-181
-182
-183
-184
-185
-186
-187</pre>
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/candy/piece.rb', line 180</span>
+      <pre class="code"><span class="info file"># File 'lib/candy/piece.rb', line 206</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_from_candy'>from_candy</span><span class='lparen'>(</span><span class='id identifier rubyid_hash'>hash</span><span class='rparen'>)</span> 
+<span class='kw'>def</span> <span class='id identifier rubyid_from_candy'>from_candy</span><span class='lparen'>(</span><span class='id identifier rubyid_hash'>hash</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_hash'>hash</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+    <span class='id identifier rubyid_binding'>binding</span><span class='period'>.</span><span class='id identifier rubyid_pry'>pry</span>
+  <span class='kw'>end</span>
   <span class='id identifier rubyid_unwrapped'>unwrapped</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
   <span class='id identifier rubyid_hash'>hash</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
     <span class='id identifier rubyid_field'>field</span> <span class='op'>=</span> <span class='const'>Wrapper</span><span class='period'>.</span><span class='id identifier rubyid_unwrap_key'>unwrap_key</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span>
@@ -856,7 +886,7 @@ any embedded Candy objects.</p>
   <div class="discussion">
     
 <p>Our initializer expects the last argument to be a hash of values. If the
-hash contains an &#39;_id&#39;  field we assume we&#39;re being constructed
+hash contains an &#39;_id&#39; field we assume we&#39;re being constructed
 from a MongoDB document and we unwrap the remaining values; otherwise we
 assume we&#39;re a new document and set any values in the hash as if they
 were assigned. Any other arguments are not our business and will be passed
@@ -1023,7 +1053,7 @@ down the chain.</p>
       <pre class="code"><span class="info file"># File 'lib/candy/piece.rb', line 107</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_remove'>remove</span>
-  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_collection'>collection</span><span class='period'>.</span><span class='id identifier rubyid_remove'>remove</span><span class='lparen'>(</span><span class='label'>_id:</span> <span class='ivar'>@__candy_id</span><span class='rparen'>)</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_collection'>collection</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='label'>_id:</span> <span class='ivar'>@__candy_id</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_delete_one'>delete_one</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1058,15 +1088,98 @@ for keys and leave internal arrays and hashes alone.</p>
       <pre class="lines">
 
 
-174
-175
-176</pre>
+200
+201
+202</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/candy/piece.rb', line 174</span>
+      <pre class="code"><span class="info file"># File 'lib/candy/piece.rb', line 200</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_candy'>to_candy</span>
   <span class='id identifier rubyid_candy'>candy</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='const'>CLASS_KEY</span> <span class='op'>=&gt;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="to_h-instance_method">
+  
+    - (<tt>Object</tt>) <strong>to_h</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Convert data to hash with a nesting</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/candy/piece.rb', line 172</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_to_h'>to_h</span>
+  <span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_inject'>inject</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_acc'>acc</span><span class='comma'>,</span> <span class='id identifier rubyid_k'>k</span><span class='op'>|</span>
+    <span class='id identifier rubyid_acc'>acc</span><span class='lbracket'>[</span><span class='id identifier rubyid_k'>k</span><span class='rbracket'>]</span> <span class='op'>=</span>
+      <span class='kw'>begin</span>
+        <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='kw'>self</span><span class='lbracket'>[</span><span class='id identifier rubyid_k'>k</span><span class='rbracket'>]</span>
+        <span class='kw'>case</span> <span class='id identifier rubyid_value'>value</span>
+        <span class='kw'>when</span> <span class='const'>Candy</span><span class='op'>::</span><span class='const'>CandyHash</span>
+          <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_to_h'>to_h</span>
+        <span class='kw'>when</span> <span class='const'>Candy</span><span class='op'>::</span><span class='const'>CandyArray</span>
+          <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_v'>v</span><span class='op'>|</span>
+            <span class='kw'>case</span> <span class='id identifier rubyid_v'>v</span>
+            <span class='kw'>when</span> <span class='const'>Candy</span><span class='op'>::</span><span class='const'>CandyHash</span><span class='comma'>,</span> <span class='const'>Candy</span><span class='op'>::</span><span class='const'>CandyArray</span>
+              <span class='id identifier rubyid_v'>v</span><span class='period'>.</span><span class='id identifier rubyid_to_h'>to_h</span>
+            <span class='kw'>else</span>
+              <span class='id identifier rubyid_v'>v</span>
+            <span class='kw'>end</span>
+          <span class='kw'>end</span>
+        <span class='kw'>else</span>
+          <span class='id identifier rubyid_value'>value</span>
+        <span class='kw'>end</span>
+      <span class='kw'>end</span>
+    <span class='id identifier rubyid_acc'>acc</span>
+  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1161,9 +1274,9 @@ saved state hash.</p>
 </div>
 
     <div id="footer">
-  Generated on Thu Aug 14 12:25:59 2014 by
+  Generated on Fri May  1 17:45:36 2015 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.4 (ruby-2.1.2).
+  0.8.7.6 (ruby-2.2.1).
 </div>
 
   </body>

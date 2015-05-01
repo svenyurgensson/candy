@@ -23,9 +23,9 @@ module Candy
     # Convert hashes and arrays to CandyHashes and CandyArrays, and set the parent key for any Candy pieces.
     def candy_coat(key, value)
       case value
-      when Hash then CandyHash.embed(self, key, value)
-      when Array then CandyArray.embed(self, key, *value)   # Explode our array into separate arguments
-      when CandyHash then value.candy_adopt(self, key)
+      when Hash       then CandyHash.embed(self, key, value)
+      when Array      then CandyArray.embed(self, key, *value)   # Explode our array into separate arguments
+      when CandyHash  then value.candy_adopt(self, key)
       when CandyArray then value.candy_adopt(self, key)
       else
         if value.respond_to?(:candy_adopt)

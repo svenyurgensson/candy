@@ -14,8 +14,14 @@ module Candy
       include Crunch::ClassMethods
 
       # Retrieves a single object from Mongo by its search attributes, or nil if it can't be found.
-      def first(conditions={})
-        conditions = {'_id' => conditions} unless conditions.is_a?(Hash)
+      def first(conditions_or_id={})
+        conditions =
+          if Hash === conditions_or_id
+            conditions_or_id
+          else
+            {'_id' => conditions_or_id}
+          end
+
         if record = collection.find(conditions).first
           self.new(record)
         end
@@ -45,7 +51,8 @@ module Candy
         end
       end
 
-      # Creates the object with parent and attribute values set properly on the object and any children.
+      # Creates the object with parent and attribute values set properly on the object
+      # and any children.
       def embed(parent, attribute, *args)
         this = self.piece(*args)
         this.candy_adopt(parent, attribute)
@@ -92,7 +99,14 @@ module Candy
         if data.delete(EMBED_KEY) or @__candy_id = data.delete('_id')  # We're an embedded or existing document
           @__candy = self.from_candy(data)
         else
-          data.each {|key, value| send("#{key}=", value)}  # Assign all the data we're given
+          new_data = {}
+          data.each do |key, value|
+            # Transform hashes and arrays, and communicate embedding
+            property             = candy_coat(key, value)
+            candy[key.to_sym]    = property
+            new_data[key.to_sym] = property
+          end
+          set new_data
         end
       end
       super
@@ -142,7 +156,7 @@ module Candy
     # Hash-like setter.  Updates the object's internal state, and writes to the database if the state
     # has changed.  Keys should be passed in as symbols for best consistency with the database.
     def []=(key, value)
-      property = candy_coat(key, value) # Transform hashes and arrays, and communicate embedding
+      property   = candy_coat(key, value) # Transform hashes and arrays, and communicate embedding
       candy[key] = property
       set key => property
     end
@@ -204,9 +218,6 @@ module Candy
     # Unwraps the values passed to us from MongoDB, setting parent attributes on any embedded Candy
     # objects.
     def from_candy(hash)
-      if hash.nil?
-        binding.pry
-      end
       unwrapped = {}
       hash.each do |key, value|
         field = Wrapper.unwrap_key(key)
