@@ -19,7 +19,11 @@ module Candy
           if Hash === conditions_or_id
             conditions_or_id
           else
-            {'_id' => conditions_or_id}
+            if BSON::ObjectId === conditions_or_id
+              {'_id' => conditions_or_id}
+            else
+              {'_id' => BSON::ObjectId.from_string(conditions_or_id)}
+            end
           end
 
         if record = collection.find(conditions).first
@@ -79,7 +83,7 @@ module Candy
       # Creates a method in the same namespace as the included class that points to
       # 'first', for easier semantics.
       def self.extended(receiver)
-        Factory.magic_method(receiver, 'first', 'conditions={}')
+        Factory.magic_method(receiver, 'first', 'conditions')
       end
     end
 

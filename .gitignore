@@ -25,3 +25,4 @@ pkg
 .rvmrc
 .rspec
 .yardoc
+t.rb
