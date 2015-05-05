@@ -116,7 +116,7 @@ module Candy
     # The 'parent' and 'attribute' parameters should be set by the caller if this is an embedded
     # Candy object.
     def self.unwrap_hash(hash, parent=nil, attribute=nil)
-      if class_name = hash.delete(CLASS_KEY.to_s)
+      if class_name = hash.delete(CLASS_KEY_STR)
         klass = qualified_const_get(class_name)
       else
         klass = CandyHash

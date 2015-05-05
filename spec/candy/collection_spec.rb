@@ -39,11 +39,11 @@ describe Candy::Collection do
   it "can be iterated" do
     these = Zagnuts.color("red").sort(:weight).to_a
     this = these.shift
-    this.pieces.should == 6
-    this.weight.should == -5
+    this.pieces.should eq(6)
+    this.weight.should eq(-5)
     this = these.shift
     this.pieces.should be_nil
-    this.weight.should == 11.8
+    this.weight.should eq(11.8)
   end
 
   it "yields populated items to .each" do

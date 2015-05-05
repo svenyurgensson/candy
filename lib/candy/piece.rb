@@ -100,7 +100,9 @@ module Candy
     def initialize(*args, &block)
       if args[-1].is_a?(Hash)
         data = args.pop
-        if data.delete(EMBED_KEY) or @__candy_id = data.delete('_id')  # We're an embedded or existing document
+        if data.delete(EMBED_KEY) or
+           data.delete(EMBED_KEY_STR) or
+           @__candy_id = data.delete('_id')  # We're an embedded or existing document
           @__candy = self.from_candy(data)
         else
           new_data = {}

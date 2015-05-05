@@ -18,7 +18,9 @@ module Candy
   # collections that use the 'CIRCLED LATIN SMALL LETTER' Unicode set, you may need to
   # change these constants.  Just be consistent about it if you want to use embedded
   # documents in Candy.
-  CLASS_KEY = 'ⓒ'.to_sym
-  EMBED_KEY = 'ⓔ'.to_sym
+  CLASS_KEY_STR = 'ⓒ'
+  CLASS_KEY = CLASS_KEY_STR.to_sym
+  EMBED_KEY_STR = 'ⓔ'
+  EMBED_KEY = EMBED_KEY_STR.to_sym
 
 end

@@ -5,9 +5,9 @@ module Candy
 
   # Handles Mongo queries for cursors upon a particular Mongo collection.
   module Collection
-    FIND_OPTIONS = [:fields, :skip, :limit, :sort, :hint, :snapshot, :timeout]
-    UP_SORTS = [Mongo::Index::ASCENDING, 'ascending', 'asc', :ascending, :asc, 1, :up]
-    DOWN_SORTS = [Mongo::Index::DESCENDING, 'descending', 'desc', :descending, :desc, -1, :down]
+    FIND_OPTIONS = [:projection, :distinct, :skip, :limit, :sort, :hint, :snapshot, :count]
+    UP_SORTS     = [Mongo::Index::ASCENDING, 'ascending', 'asc', :ascending, :asc, 1, :up]
+    DOWN_SORTS   = [Mongo::Index::DESCENDING, 'descending', 'desc', :descending, :desc, -1, :down]
 
     include Enumerable
 
@@ -21,10 +21,10 @@ module Candy
       # for all found records. Otherwise the collection name is used as a
       # default, and CandyHash is a fallback.
       def collects(collection, piece = nil)
-        collectible = camelcase(collection)
-        piecemeal = namespace + (piece ? camelcase(piece) : collectible)
+        collectible     = camelcase(collection.to_s.split("::").last)
+        piecemeal       = namespace + (piece ? camelcase(piece) : collectible)
         self.collection = collectible
-        @_candy_piece = Kernel.qualified_const_get(piecemeal) || CandyHash
+        @_candy_piece   = Kernel.qualified_const_get(piecemeal) || CandyHash
       end
 
       def all(options={})
@@ -74,7 +74,8 @@ module Candy
 
     def method_missing(name, *args, &block)
       if @_candy_cursor.respond_to?(name)
-        @_candy_cursor.send(name, *args, &block)
+        @_candy_cursor = @_candy_cursor.send(name, *args, &block)
+        self
       elsif FIND_OPTIONS.include?(name)
         @_candy_options[name] = args.shift
         refresh_cursor
@@ -91,7 +92,7 @@ module Candy
     # Makes our collection enumerable.  This relies heavily on Mongo::Cursor methods --
     # we only reimplement it so that the objects we return can be Candy objects.
     def each
-      refresh_cursor
+      #refresh_cursor
       @_candy_cursor.each do |this|
         yield self.class._candy_piece.new(this)
       end
@@ -113,20 +114,36 @@ module Candy
     # As an added bonus, sorts can also be chained.  If you call #sort more than once then all
     # sorts will be applied in the order in which you called them.
     def sort(*fields)
+      fields = fields.flatten(1)
       @_candy_sort ||= {}
-      temp_sort = []
-      until fields.flatten.empty?
-        this = fields.pop  # We're going backwards so that we can test for modifiers
-        if UP_SORTS.include?(this)
-          temp_sort.unshift [fields.pop, Mongo::Index::ASCENDING]
-        elsif DOWN_SORTS.include?(this)
-          temp_sort.unshift [fields.pop, Mongo::Index::DESCENDING]
+      return self if fields.empty?
+      return self if Hash === fields.first and fields.first.empty?
+
+      temp_sort =
+        if Hash === fields
+          fields
+        elsif Array === fields.first
+          fields.to_h
+        elsif Hash === fields.first
+          fields.first
         else
-          temp_sort.unshift [this, Mongo::Index::ASCENDING]
+          fields << :asc if fields.size == 1
+          [fields].to_h
+        end
+
+      temp_sort.each do |k,v|
+        if UP_SORTS.include?(v)
+          temp_sort[k] = Mongo::Index::ASCENDING
+        elsif DOWN_SORTS.include?(v)
+          temp_sort[k] = Mongo::Index::DESCENDING
+        else
+          temp_sort[k] = Mongo::Index::ASCENDING
         end
       end
-      @_candy_sort.merge!(temp_sort.to_h)
+
+      @_candy_sort.merge!(temp_sort)
       @_candy_cursor.sort(@_candy_sort)
+
       self
     end
 
@@ -134,7 +151,6 @@ module Candy
   private
 
     def refresh_cursor
-      # @_candy_options in find ?
       @_candy_sort ||= {}
       @_candy_cursor = self.class.collection.find(@_candy_query).sort(@_candy_sort)
     end
@@ -148,7 +164,7 @@ module Candy
     end
 
     def self.included(receiver)
-      receiver.extend         ClassMethods
+      receiver.extend  ClassMethods
     end
   end
 end

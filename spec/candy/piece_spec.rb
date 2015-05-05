@@ -14,6 +14,11 @@ describe Candy::Piece do
     @this = Zagnut.new
   end
 
+  after(:each) do
+    KitKat.collection.drop rescue nil
+    Zagnut.collection.drop rescue nil
+  end
+
 
   it "lazy inserts" do
     @this.id.should be_nil
@@ -145,7 +150,7 @@ describe Candy::Piece do
       @this.smell = "fruity"
       @this.feel = "rough"
       that = Zagnut(@this.id)
-      that.retrieve(:smell)[:smell].should == "fruity"
+      that.retrieve(:smell)[:smell].should eq("fruity")
       that.retrieve(:smell).should_not have_key(:feel)
     end
 
@@ -290,14 +295,6 @@ describe Candy::Piece do
     end
 
 
-
-
-  end
-
-
-  after(:each) do
-    KitKat.collection.drop rescue nil
-    Zagnut.collection.drop rescue nil
   end
 
 end
