@@ -112,7 +112,7 @@ module Candy
             candy[key.to_sym]    = property
             new_data[key.to_sym] = property
           end
-          set new_data
+          set Candy.symbolize(new_data)
         end
       end
       super
@@ -164,7 +164,7 @@ module Candy
     def []=(key, value)
       property   = candy_coat(key, value) # Transform hashes and arrays, and communicate embedding
       candy[key] = property
-      set key => property
+      set key.to_sym => property
     end
 
     # Clears memoized data so that the next read pulls from the database.
@@ -237,8 +237,22 @@ module Candy
   private
 
 
-    def self.included(receiver)
+  def self.included(receiver)
       receiver.extend ClassMethods
     end
   end
+
+  def self.symbolize(obj)
+    return obj.reduce({}) do |memo, (k, v)|
+      memo.tap { |m| m[k.to_sym] = symbolize(v) }
+    end if obj.is_a? Hash
+
+    return obj.reduce([]) do |memo, v|
+      memo << symbolize(v); memo
+    end if obj.is_a? Array
+
+    obj
+  end
+
+
 end
