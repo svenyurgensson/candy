@@ -92,7 +92,7 @@ module Candy
     # Makes our collection enumerable.  This relies heavily on Mongo::Cursor methods --
     # we only reimplement it so that the objects we return can be Candy objects.
     def each
-      #refresh_cursor
+      refresh_cursor
       @_candy_cursor.each do |this|
         yield self.class._candy_piece.new(this)
       end
@@ -152,7 +152,7 @@ module Candy
 
     def refresh_cursor
       @_candy_sort ||= {}
-      @_candy_cursor = self.class.collection.find(@_candy_query).sort(@_candy_sort)
+      @_candy_cursor = self.class.collection.find(@_candy_query.dup).sort(@_candy_sort.dup)
     end
 
     def extract_options(hash)

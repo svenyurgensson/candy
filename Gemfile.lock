@@ -1,13 +1,13 @@
 PATH
   remote: .
   specs:
-    candy (0.2.11)
-      mongo (= 2.0.2)
+    candy (0.3.0)
+      mongo (~> 2.2.0)
 
 GEM
   remote: http://rubygems.org/
   specs:
-    bson (3.2.6)
+    bson (4.0.0)
     byebug (4.0.5)
       columnize (= 0.9.0)
     coderay (1.1.0)
@@ -17,8 +17,8 @@ GEM
     method_source (0.8.2)
     mocha (0.10.5)
       metaclass (~> 0.0.1)
-    mongo (2.0.2)
-      bson (~> 3.0)
+    mongo (2.2.1)
+      bson (~> 4.0)
     pry (0.10.1)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
