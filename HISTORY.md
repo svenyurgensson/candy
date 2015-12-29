@@ -1,7 +1,9 @@
 Candy History
 =============
+v0.2.5 - 2015-12-29
+* Update to mongo 2.2.x
+* Bump version to 0.2.5
 
-This document aims to provide only an overview.  Further, we've only really been tracking things since **v0.2**.  For obsessive detail, just check out the `git log`.
 v0.2.11 - 2014-09-24 (the "New life coming...")
 -----------------------------------------------
 * Update to last mongo gems
