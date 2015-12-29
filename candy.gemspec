@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.name = %q{candy}
   s.version = Candy::VERSION
   s.platform    = Gem::Platform::RUBY
-  s.authors = ["Stephen Eley"]
+  s.authors = ["Stephen Eley", "Yury Batenko"]
   s.description = %q{Candy provides simple, transparent object persistence for the MongoDB database.  Classes that
 include Candy modules save all properties to Mongo automatically, can be recursively embedded,
 and can retrieve records with chainable open-ended class methods, eliminating the need for

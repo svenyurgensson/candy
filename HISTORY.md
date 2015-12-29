@@ -1,8 +1,8 @@
 Candy History
 =============
-v0.2.5 - 2015-12-29
+v0.3.0 - 2015-12-29
 * Update to mongo 2.2.x
-* Bump version to 0.2.5
+* Bump version to 0.3.0
 
 v0.2.11 - 2014-09-24 (the "New life coming...")
 -----------------------------------------------
