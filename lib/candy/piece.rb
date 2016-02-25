@@ -188,6 +188,10 @@ module Candy
       "#{self.class.name} (#{id})#{candy.inspect}"
     end
 
+    def inspect
+      self.to_h
+    end
+
     # Convert data to hash with a nesting
     def to_h
       keys.inject({}) do |acc, k|
@@ -207,7 +211,11 @@ module Candy
                 end
               end
             else
-              value
+              if value.respond_to? :to_h
+                value.to_h
+              else
+                value
+              end
             end
           end
         acc
