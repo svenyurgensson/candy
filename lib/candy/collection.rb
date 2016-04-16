@@ -73,12 +73,12 @@ module Candy
     end
 
     def method_missing(name, *args, &block)
-      if @_candy_cursor.respond_to?(name)
-        @_candy_cursor = @_candy_cursor.send(name, *args, &block)
-        self
-      elsif FIND_OPTIONS.include?(name)
+      if FIND_OPTIONS.include?(name)
         @_candy_options[name] = args.shift
         refresh_cursor
+        self
+      elsif @_candy_cursor.respond_to?(name)
+        @_candy_cursor = @_candy_cursor.send(name, *args, &block)
         self
       else
         @_candy_query[name] = args.shift
@@ -152,7 +152,17 @@ module Candy
 
     def refresh_cursor
       @_candy_sort ||= {}
-      @_candy_cursor = self.class.collection.find(@_candy_query.dup).sort(@_candy_sort.dup)
+      @_candy_cursor =
+        self.class.collection
+        .find(@_candy_query.dup)
+        .sort(@_candy_sort.dup)
+      if skip = @_candy_options[:skip]
+        @_candy_cursor = @_candy_cursor.skip(skip)
+      end
+      if limit = @_candy_options[:limit]
+        @_candy_cursor = @_candy_cursor.limit(limit)
+      end
+      @_candy_cursor
     end
 
     def extract_options(hash)

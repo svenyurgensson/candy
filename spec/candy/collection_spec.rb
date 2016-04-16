@@ -27,13 +27,23 @@ describe Candy::Collection do
     those.count.should == 3
   end
 
+  it 'respects "limit"' do
+    those = Zagnuts.all.limit(2)
+    those.count.should == 2
+  end
+
+  it 'respects "skip"' do
+    those = Zagnuts.all.skip(2)
+    those.count.should == 1
+  end
+
   it "still returns if nothing matches" do
     Zagnuts.color("green").to_a.should == []
   end
 
   it "can take options" do
     those = Zagnuts.color("red").sort("weight", :down)
-    those.collect{|z| z.weight}.should == [11.8, -5]
+    those.collect { |z| z.weight }.should == [11.8, -5]
   end
 
   it "can be iterated" do
