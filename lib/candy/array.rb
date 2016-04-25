@@ -1,3 +1,4 @@
+require 'candy/utils'
 require 'candy/crunch'
 require 'candy/embeddable'
 
@@ -40,6 +41,10 @@ module Candy
     # Iterates over each value in turn, so that we can have proper Enumerable support
     def each(&block)
       candy.each(&block)
+    end
+
+    def to_h
+      map { |x| Candy::Utils.to_h(x) }
     end
 
     # Appends a value to our array.

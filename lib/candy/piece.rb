@@ -1,3 +1,4 @@
+require 'candy/utils'
 require 'candy/array'
 require 'candy/crunch'
 require 'candy/embeddable'
@@ -91,7 +92,7 @@ module Candy
     include Crunch
     include Crunch::Document
     include Embeddable
-
+    include Candy::Utils
 
     # Our initializer expects the last argument to be a hash of values. If the hash contains an '_id'
     # field we assume we're being constructed from a MongoDB document and we unwrap the remaining
@@ -191,37 +192,6 @@ module Candy
     def inspect
       self.to_h
     end
-
-    # Convert data to hash with a nesting
-    def to_h
-      keys.inject({}) do |acc, k|
-        acc[k] =
-          begin
-            value = self[k]
-            case value
-            when Candy::CandyHash
-              value.to_h
-            when Candy::CandyArray
-              value.map do |v|
-                case v
-                when Candy::CandyHash, Candy::CandyArray
-                  v.to_h
-                else
-                  v
-                end
-              end
-            else
-              if value.respond_to? :to_h
-                value.to_h
-              else
-                value
-              end
-            end
-          end
-        acc
-      end
-    end
-
 
     # Converts the object into a hash for MongoDB storage.  Keep in mind that wrapping happens _after_
     # this stage, so it's best to use symbols for keys and leave internal arrays and hashes alone.

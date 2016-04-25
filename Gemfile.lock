@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    candy (0.3.0)
+    candy (0.3.2)
       mongo (~> 2.2.0)
 
 GEM
@@ -45,3 +45,6 @@ DEPENDENCIES
   pry
   pry-byebug
   rspec (~> 2.7.0)
+
+BUNDLED WITH
+   1.10.5
