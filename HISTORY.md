@@ -1,14 +1,17 @@
 Candy History
 =============
 v0.3.4 - 2016-04-22
+--------------------
 * Fix `to_h` implementation
 * Add spec for `to_h` util method
 * Implement `Candy::CandyArray.to_h`
 
 v0.3.2 - 2016-04-16
+--------------------
 * Fix `limit`, `skip` for collection
 
 v0.3.0 - 2015-12-29
+-------------------
 * Update to mongo 2.2.x
 * Bump version to 0.3.0
 
