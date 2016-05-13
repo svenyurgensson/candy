@@ -10,12 +10,22 @@ module Candy
       ns = namespace(klass)
       my_name = klass.name.sub(ns, '').to_sym
       parent = (ns == '' ? Object : qualified_const_get(ns))
-      unless parent.method_defined?(my_name)
-        parent.class_eval <<-CLASS
+      if parent.class == Class
+        unless parent.method_defined?(my_name)
+          parent.class_eval <<-CLASS
           def #{my_name}(#{params})
             #{klass}.#{method}(#{params.gsub(/\s?=(.+?),/,',')})
           end
         CLASS
+        end
+      else # Module
+        unless parent.public_methods.include?(my_name)
+          parent.class_eval <<-CLASS
+          def self.#{my_name}(#{params})
+            #{klass}.#{method}(#{params.gsub(/\s?=(.+?),/,',')})
+          end
+        CLASS
+        end
       end
     end
 

@@ -1,5 +1,9 @@
 Candy History
 =============
+v0.3.5 - 2016-05-13
+--------------------
+* Define magic methods on modules also
+
 v0.3.4 - 2016-04-22
 --------------------
 * Fix `to_h` implementation
